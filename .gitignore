@@ -1,0 +1,9 @@
+# Dependency directories
+node_modules/
+
+# Webpack generated code
+dist/
+
+# scripts
+*.sh
+

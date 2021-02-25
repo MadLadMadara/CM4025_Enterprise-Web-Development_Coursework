@@ -1,0 +1,42 @@
+{
+  "name": "cm4025_enterprise-web-development_coursework",
+  "version": "1.0.0",
+  "description": "enterprise web development coursework A-B testing coursework ",
+  "main": "index.js",
+  "scripts": {
+    "development": "nodemon",
+    "build": "webpack --config webpack.config.client.production.js && webpack --mode=production --config webpack.config.server.js",
+    "start": "NODE_ENV=production node ./dist/server.generated.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MadLadMadara/CM4025_Enterprise-Web-Development_Coursework.git"
+  },
+  "keywords": [
+    "webdev",
+    "MERN"
+  ],
+  "author": "Sam McRuvie",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MadLadMadara/CM4025_Enterprise-Web-Development_Coursework/issues"
+  },
+  "homepage": "https://github.com/MadLadMadara/CM4025_Enterprise-Web-Development_Coursework#readme",
+  "devDependencies": {
+    "@babel/core": "^7.13.1",
+    "@babel/preset-env": "^7.13.5",
+    "babel-loader": "^8.2.2"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "helmet": "^4.4.1",
+    "mongoose": "^5.11.18",
+    "webpack": "^5.24.2",
+    "webpack-cli": "^4.5.0",
+    "webpack-node-externals": "^2.5.2"
+  }
+}
