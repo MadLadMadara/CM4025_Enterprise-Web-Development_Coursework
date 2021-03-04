@@ -8,12 +8,38 @@ import compress from 'compression'
 import cors from 'cors'
 import helmet from 'helmet'
 
+// modules for server side rendering
+import React from 'react'
+import ReactDOMServer from 'react-dom/server'
+import MainRouter from './../client/MainRouter'
+import { StaticRouter } from 'react-router-dom'
+import { ServerStyleSheets, ThemeProvider } from '@material-ui/styles'
+import theme from './../client/theme'
+
+// dev packages TODO:!!REMOVE FOR PRODUCTION!!
+import devBundle from './devBundle'
+
 // routers
 import userRoutes from './routes/user.routes'
 import authRoutes from './routes/auth.routes'
 
-// ----------- Express pakages middle ware
+// Pageload
+
+import Template from "../template";
+
+
+// ---------- CONSTs
+const CURRENT_WORKING_DIR = process.cwd();
 const app = express();
+
+
+
+
+// ----------- Middleware packages
+
+// TODO: remove for production
+devBundle.compile(app);
+
 // parse body params and attache them to req.body
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -25,9 +51,33 @@ app.use(helmet());
 app.use(cors());
 
 // ---------- Express routes
+app.use('/dist', express.static(path.join(CURRENT_WORKING_DIR, 'dist')))
 app.use('/', userRoutes);
 app.use('/', authRoutes);
 
+// ---------- React routes
+app.get('*', (req, res) => {
+    const sheets = new ServerStyleSheets()
+    const context = {}
+    const markup = ReactDOMServer.renderToString(
+        sheets.collect(
+            <StaticRouter location={req.url} context={context}>
+            <ThemeProvider theme={theme}>
+            <MainRouter />
+            </ThemeProvider>
+            </StaticRouter>
+        )
+    )
+    if (context.url) {
+        return res.redirect(303, context.url);
+    }
+    const css = sheets.toString();
+        res.status(200).send(Template({
+            markup: markup,
+            css: css
+    }))
+
+})
 // ---------- Error handeling
 app.use((err, req, res, next) => {
     if (err.name === 'UnauthorizedError') {
