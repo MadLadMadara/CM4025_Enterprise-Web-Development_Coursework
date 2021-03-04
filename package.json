@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "development": "nodemon",
-    "build": "webpack --config webpack.config.client.production.js && webpack --mode=production --config webpack.config.server.js && npm run-script start" , 
+    "build": "webpack --config webpack.config.client.production.js && webpack --mode=production --config webpack.config.server.js" , 
     "start": "NODE_ENV=production node ./dist/server.generated.js"
   },
   "repository": {
