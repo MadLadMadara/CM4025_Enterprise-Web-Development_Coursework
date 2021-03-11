@@ -2,10 +2,10 @@
   "name": "cm4025_enterprise-web-development_coursework",
   "version": "1.0.0",
   "description": "enterprise web development coursework A-B testing coursework ",
-  "main": "index.js",
+  "main": "./dist/server.generated.js",
   "scripts": {
     "development": "nodemon",
-    "build": "webpack --config webpack.config.client.production.js && webpack --mode=production --config webpack.config.server.js" , 
+    "build": "webpack --config webpack.config.client.production.js && webpack --mode=production --config webpack.config.server.js",
     "start": "NODE_ENV=production node ./dist/server.generated.js"
   },
   "repository": {
