@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
@@ -44,6 +45,7 @@ export default function Home () {
       <CardContent>
         <Typography variant='body1' component='p'>
           Welcome to Lab 6 home page.
+          <Link to='/users'>Users</Link>
         </Typography>
       </CardContent>
     </Card>
