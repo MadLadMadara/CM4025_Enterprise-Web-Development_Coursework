@@ -2,4 +2,8 @@
 # scripts
 *.sh
 
+#  node moduals
 node_modules
+
+# Dev tools
+.eslintrc.*

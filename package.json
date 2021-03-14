@@ -6,7 +6,9 @@
   "scripts": {
     "development": "nodemon",
     "build": "webpack --config webpack.config.client.production.js && webpack --mode=production --config webpack.config.server.js",
-    "start": "NODE_ENV=production node ./dist/server.generated.js"
+    "start": "NODE_ENV=production node ./dist/server.generated.js",
+    "pretest": "eslint",
+    "beautify": "standard --fix"
   },
   "repository": {
     "type": "git",
@@ -54,6 +56,13 @@
     "@babel/core": "^7.12.17",
     "@babel/preset-env": "^7.12.17",
     "babel-loader": "^8.2.2",
-    "file-loader": "^6.2.0"
+    "eslint": "^7.22.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.22.0",
+    "file-loader": "^6.2.0",
+    "standard": "^16.0.3"
   }
 }
