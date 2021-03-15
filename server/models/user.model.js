@@ -13,16 +13,23 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
+  age: {
+    type: Number,
+    required: 'Age is required',
+    min: [14, 'Too young'],
+    max: [150, 'Too old']
+  },
+  gender: {
+    type: String,
+    enum: ['male', 'female', 'non-binery', 'other'],
+    required: 'Gender identity is required'
+  },
   email: {
     type: String,
     trim: true,
     unique: 'Email already exists',
     match: [/.+\@.+\..+/, 'Please fill a valid email address'],
     required: 'Email is required'
-  },
-  about: {
-    type: String,
-    trim: true
   },
   hashed_password: {
     type: String,
@@ -33,6 +40,18 @@ const UserSchema = new mongoose.Schema({
   created: {
     type: Date,
     default: Date.now
+  },
+  preferences: {
+    coffee: {
+      preGround: {
+        type: Boolean,
+        default: false
+      },
+      rost: {
+        type: String,
+        enum: ['light', 'medium', 'dark']
+      }
+    }
   }
 })
 // ---------- Password & hashed_password propertys handeling
