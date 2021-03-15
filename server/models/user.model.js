@@ -9,12 +9,20 @@ const UserSchema = new mongoose.Schema({
     trim: true,
     required: 'Name is required'
   },
+  admin: {
+    type: Boolean,
+    default: false
+  },
   email: {
     type: String,
     trim: true,
     unique: 'Email already exists',
     match: [/.+\@.+\..+/, 'Please fill a valid email address'],
     required: 'Email is required'
+  },
+  about: {
+    type: String,
+    trim: true
   },
   hashed_password: {
     type: String,

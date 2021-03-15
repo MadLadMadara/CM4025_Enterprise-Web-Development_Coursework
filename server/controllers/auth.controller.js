@@ -40,6 +40,7 @@ const signin = async (req, res) => {
         _id: user._id,
         name: user.name,
         email: user.email
+        
       }
     })
   } catch (err) {
@@ -68,9 +69,21 @@ const hasAuthorization = (req, res, next) => {
   }
   next()
 }
+const hasAdminAuthorization = (req, res, next) => {
+  const authorized = req.profile && req.auth && req.profile._id == req.auth._id && req.profile.admin == true
+  console.log()
+  if (!(authorized)) {
+    return res.status('403').json({
+      error: 'User is not authorized for admin'
+    })
+  }
+  next()
+}
+
 export default {
   signin,
   signout,
   requireSignin,
-  hasAuthorization
+  hasAuthorization,
+  hasAdminAuthorization
 }
