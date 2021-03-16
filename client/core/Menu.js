@@ -22,9 +22,6 @@ const Menu = withRouter(({ history }) => (
           <HomeIcon />
         </IconButton>
       </Link>
-      <Link to='/users'>
-        <Button style={isActive(history, '/users')}>Users</Button>
-      </Link>
       {
         !auth.isAuthenticated() && (<span>
           <Link to='/signup'>
@@ -48,6 +45,13 @@ const Menu = withRouter(({ history }) => (
             }}
           >Sign out
           </Button>
+        </span>)
+      }
+      {
+        auth.isAdmin() && (<span>
+          <Link to={'/admin/' + auth.isAdmin().user._id}>
+            <Button style={isActive(history, '/admin/' + auth.isAdmin().user._id)}>Admin dashboard</Button>
+          </Link>
         </span>)
       }
     </Toolbar>

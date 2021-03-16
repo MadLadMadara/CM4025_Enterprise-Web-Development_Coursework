@@ -33,15 +33,13 @@ export default function UserAdmin () {
     const abortController = new AbortController()
     const signal = abortController.signal
 
-    listadmin({userId: match.params.userId}, {t: jwt.token}, signal).then((data) => {
-        if (data && data.error) {
-          console.log(data.error)
-        } else {
-          setUsers(data)
-        }
-      })
-  
-  
+    listadmin({ userId: match.params.userId }, { t: jwt.token }, signal).then((data) => {
+      if (data && data.error) {
+        console.log(data.error)
+      } else {
+        setUsers(data)
+      }
+    })
 
     return function cleanup () {
       abortController.abort()

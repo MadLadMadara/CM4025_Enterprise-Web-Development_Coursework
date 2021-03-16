@@ -146,51 +146,51 @@ export default function Signup () {
           <TextField id='password' type='password' label='Password' className={classes.textField} value={values.password} onChange={handleChange('password')} margin='normal' />
           <TextField id='age' type='number' label='Age' className={classes.textField} value={values.age} onChange={handleChange('age')} margin='normal' />
           <TextField
-          id="gender"
-          select
-          label="gender"
-          className={classes.textField}
-          value={values.gender}
-          onChange={handleChange('gender')}
-          helperText="Select your gender"
-        >
-          {gendersList.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </TextField>
-        <Typography variant='h6' className={classes.subTitle}>
-          Coffee preferences
-        </Typography>
-        <TextField
-          id="preGround"
-          select
-          label="Whole bean or pre-ground"
-          className={classes.textField}
-          value={values.preGround}
-          onChange={handleChange('preGround')}
-        >
-          {groundList.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </TextField>
-        <TextField
-          id="rost"
-          select
-          label="Prefered coffee rost"
-          className={classes.textField}
-          value={values.rost}
-          onChange={handleChange('rost')}
-        >
-          {rostList.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </TextField>
+            id='gender'
+            select
+            label='gender'
+            className={classes.textField}
+            value={values.gender}
+            onChange={handleChange('gender')}
+            helperText='Select your gender'
+          >
+            {gendersList.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
+          <Typography variant='h6' className={classes.subTitle}>
+            Coffee preferences
+          </Typography>
+          <TextField
+            id='preGround'
+            select
+            label='Whole bean or pre-ground'
+            className={classes.textField}
+            value={values.preGround}
+            onChange={handleChange('preGround')}
+          >
+            {groundList.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField
+            id='rost'
+            select
+            label='Prefered coffee rost'
+            className={classes.textField}
+            value={values.rost}
+            onChange={handleChange('rost')}
+          >
+            {rostList.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
           <br /> {
             values.error && (<Typography component='p' color='error'>
               <Icon color='error' className={classes.error}>error</Icon>

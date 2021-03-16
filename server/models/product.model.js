@@ -34,12 +34,19 @@ const ProductSchema = new mongoose.Schema({
   weight: {
     type: Number,
     max: [1000, 'Weight can not be above 1kg'],
-    min: [250, 'Weight can not be below 250g']
+    min: [250, 'Weight can not be below 250g'],
+    required: 'Product name is required'
   },
   viewedBy: [{
     type: mongoose.ObjectId,
+    unique: true,
     ref: User
-  }]
+  }],
+  views: {
+    type: Number,
+    min: [0, 'Negitivew views are not alloweds'],
+    default: 0
+  }
 
 })
 

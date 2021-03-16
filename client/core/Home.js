@@ -1,53 +1,81 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
+import Typography from '@material-ui/core/Typography'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
+import CardActionArea from '@material-ui/core/CardActionArea'
 import CardMedia from '@material-ui/core/CardMedia'
-import Typography from '@material-ui/core/Typography'
-import myImg from './../assets/images/download.png'
+import { list } from '../product/api-products'
+import Paper from '@material-ui/core/Paper'
+import img1 from '../assets/images/1.jpg'
+import img2 from '../assets/images/1.jpg'
 
 // style
 const useStyles = makeStyles(theme => ({
-  card: {
-    maxWidth: 600,
-    margin: 'auto',
-    marginTop: theme.spacing(5),
-    marginBottom: theme.spacing(5)
-  },
-  title: {
-    padding: `${theme.spacing(3)}px ${theme.spacing(2.5)}px ${theme.spacing(2)}px`,
-    color: theme.palette.openTitle
+  root: {
+    maxWidth: 345,
+    padding: theme.spacing(3)
   },
   media: {
-    minHeight: 400
-  },
-  credit: {
-    padding: 10,
-    textAlign: 'right',
-    backgroundColor: '#ededed',
-    borderBottom: '1px solid #d0d0d0',
-    '& a': {
-      color: '#3f4771'
-    }
+    height: 140
   }
 }))
 
 export default function Home () {
   const classes = useStyles()
+
+  const [products, setProducts] = useState([])
+
+  useEffect(() => {
+    const abortController = new AbortController()
+    const signal = abortController.signal
+
+    list(signal).then((data) => {
+      if (data && data.error) {
+        console.log(data.error)
+      } else {
+        console.log('Here is the user data')
+        console.log(data)
+        setProducts(data)
+      }
+    })
+
+    return function cleanup () {
+      abortController.abort()
+    }
+  }, [])
+
+  const getImg = () => {
+    if (Math.floor(Math.random() * Math.floor(1)) === 1) return img1
+    return img2
+  }
+
   return (
-    <Card className={classes.card}>
-      <Typography variant='h6' className={classes.title}>
-        Home Page
-      </Typography>
-      <CardMedia className={classes.media} image={myImg} title='My Image' />
-      <Typography variant='body2' component='p' className={classes.credit} color='textSecondary'>Photo: Picasso</Typography>
-      <CardContent>
-        <Typography variant='body1' component='p'>
-          Welcome to Lab 6 home page.
-          <Link to='/users'>Users</Link>
-        </Typography>
-      </CardContent>
-    </Card>
+    <Paper className={classes.root} elevation={4}>
+    {products.map((item, i) => {
+      return (
+      <Card key={i}>
+        <Link to={'/product/' + item._id}>
+        <CardActionArea>
+          <CardMedia
+            className={classes.media}
+            image={getImg()}
+            title="Contemplative Reptile"
+          />
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="h2">
+              {item.name}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              {item.description}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+        </Link>
+      </Card>
+      )
+    })}
+    </Paper>
   )
 }

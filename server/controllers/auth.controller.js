@@ -40,7 +40,8 @@ const signin = async (req, res) => {
         _id: user._id,
         name: user.name,
         email: user.email,
-        preferences: user.preferences
+        preferences: user.preferences,
+        admin: user.admin
       }
     })
   } catch (err) {
