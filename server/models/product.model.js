@@ -12,11 +12,6 @@ const ProductSchema = new mongoose.Schema({
     unique: 'Product already exists',
     required: 'Product name is required'
   },
-  imgUrl: {
-    type: String,
-    unique: 'Image url already in use',
-    required: 'Product must have an image'
-  },
   rost: {
     type: String,
     enum: ['light', 'medium', 'dark'],
@@ -47,7 +42,6 @@ const ProductSchema = new mongoose.Schema({
     min: [0, 'Negitivew views are not alloweds'],
     default: 0
   }
-
 })
 
 export default mongoose.model('Product', ProductSchema)

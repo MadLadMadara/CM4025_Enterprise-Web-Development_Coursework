@@ -8,20 +8,23 @@ import productCtrl from '../controllers/product.controller'
 const router = express.Router()
 
 // user routess
+
 router.route('/api/products')
   .get(productCtrl.list)
 
 router.route('/api/products/:productId/:userId')
-  .get(authCtrl.requireSignin, authCtrl.hasAuthorization, productCtrl.read)
+  .get(authCtrl.requireSignin, authCtrl.hasAdminAuthorization, productCtrl.read)
 
-// admin routes
-router.route('/api/products/admin')
-  .post(authCtrl.requireSignin, authCtrl.hasAdminAuthorization, productCtrl.create)
-  .get(authCtrl.requireSignin, authCtrl.hasAdminAuthorization, productCtrl.listWithAnalytics)
+// admin product routes
+router.route('/api/admin/:userId')
+  .post(authCtrl.requireSignin, authCtrl.hasAdminAuthorization, productCtrl.read)
+  .get(authCtrl.requireSignin, authCtrl.hasAdminAuthorization, productCtrl.listAdmin)
 
-router.route('/api/products/admin/:productId')
+router.route('/api/admin/:userId/:productId')
   .put(authCtrl.requireSignin, authCtrl.hasAdminAuthorization, productCtrl.update)
   .delete(authCtrl.requireSignin, authCtrl.hasAdminAuthorization, productCtrl.remove)
+  .get(authCtrl.requireSignin, authCtrl.hasAdminAuthorization, productCtrl.readAdmin)
+  .put(authCtrl.requireSignin, authCtrl.hasAdminAuthorization, productCtrl.resetVewedBy)
 
 router.param('userId', userCtrl.userByID)
 router.param('productId', productCtrl.productByID)

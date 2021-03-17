@@ -6,6 +6,7 @@ import errorHandler from './../helpers/dbErrorHandler'
 const create = async (req, res) => {
   const user = new User(req.body)
   try {
+    user.admin = false
     await user.save()
     return res.status(200).json({
       message: 'Successfully signed up!'
@@ -18,7 +19,7 @@ const create = async (req, res) => {
 }
 const list = async (req, res) => {
   try {
-    const users = await User.find().select('name email updated created')
+    const users = await User.find().select('name email updated created admin age gender')
     res.json(users)
   } catch (err) {
     return res.status(400).json({
@@ -50,6 +51,7 @@ const read = (req, res) => {
 const update = async (req, res) => {
   try {
     let user = req.profile
+    user.admin = false
     user = extend(user, req.body)
     user.updated = Date.now()
     await user.save()
@@ -75,6 +77,9 @@ const remove = async (req, res) => {
     })
   }
 }
+// admin update
+
+// 
 export default {
   create,
   userByID,

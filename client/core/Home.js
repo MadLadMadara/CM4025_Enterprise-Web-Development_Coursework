@@ -8,8 +8,7 @@ import CardActionArea from '@material-ui/core/CardActionArea'
 import CardMedia from '@material-ui/core/CardMedia'
 import { list } from '../product/api-products'
 import Paper from '@material-ui/core/Paper'
-import img1 from '../assets/images/1.jpg'
-import img2 from '../assets/images/1.jpg'
+import img from '../assets/images/1.jpg'
 
 // style
 const useStyles = makeStyles(theme => ({
@@ -46,11 +45,6 @@ export default function Home () {
     }
   }, [])
 
-  const getImg = () => {
-    if (Math.floor(Math.random() * Math.floor(1)) === 1) return img1
-    return img2
-  }
-
   return (
     <Paper className={classes.root} elevation={4}>
     {products.map((item, i) => {
@@ -60,7 +54,7 @@ export default function Home () {
         <CardActionArea>
           <CardMedia
             className={classes.media}
-            image={getImg()}
+            image={img}
             title="Contemplative Reptile"
           />
           <CardContent>

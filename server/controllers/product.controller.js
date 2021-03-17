@@ -1,20 +1,7 @@
-import User from '../models/user.model'
 import Product from '../models/product.model'
 import extend from 'lodash/extend'
 import errorHandler from './../helpers/dbErrorHandler'
-const create = async (req, res) => {
-  const product = new Product(req.body)
-  try {
-    await product.save()
-    return res.status(200).json({
-      message: 'Successfully added product up!'
-    })
-  } catch (err) {
-    return res.status(400).json({
-      error: errorHandler.getErrorMessage(err)
-    })
-  }
-}
+
 const list = async (req, res) => {
   try {
     const products = await Product.find().select('views name imgUrl rost description price weight')
@@ -27,7 +14,7 @@ const list = async (req, res) => {
 }
 const productByID = async (req, res, next, id) => {
   try {
-    const product = await Product.findById(id).populate('viewedBy')
+    const product = await Product.findById(id).populate('viewedBy', 'preferences age gender')
     if (!product) {
       return res.status('400').json({
         error: 'Product not found'
@@ -37,7 +24,7 @@ const productByID = async (req, res, next, id) => {
     next()
   } catch (err) {
     return res.status('400').json({
-      error: 'Could not retrieve user'
+      error: 'Could not retrieve product'
     })
   }
 }
@@ -57,6 +44,7 @@ const read = async (req, res) => {
     })
   }
 }
+
 const remove = async (req, res) => {
   try {
     const product = req.product
@@ -82,11 +70,50 @@ const update = async (req, res) => {
     })
   }
 }
-const listWithAnalytics = async (req, res) => {
+// admin controlls
+const create = async (req, res) => {
+  const product = new Product(req.body)
+
   try {
-    const products = await Product.find().populate('viewedBy')
-    // TODO: create anaitics for each
+    await product.save()
+    return res.status(200).json({
+      message: 'Successfully added product up!'
+    })
+  } catch (err) {
+    return res.status(400).json({
+      error: errorHandler.getErrorMessage(err)
+    })
+  }
+}
+
+const readAdmin = async (req, res) => {
+  try {
+    const product = req.product
+    res.json(product)
+  } catch (err) {
+    return res.status(400).json({
+      error: errorHandler.getErrorMessage(err)
+    })
+  }
+}
+const listAdmin = async (req, res) => {
+  try {
+    const products = await Product.find().populate('viewedBy', 'preferences age gender')
     res.json(products)
+  } catch (err) {
+    return res.status(400).json({
+      error: errorHandler.getErrorMessage(err)
+    })
+  }
+}
+
+const resetVewedBy = async (req, res) => {
+  try {
+    const product = req.product
+    product.viewedBy = []
+    product.views = 0
+    await product.save()
+    res.json(product)
   } catch (err) {
     return res.status(400).json({
       error: errorHandler.getErrorMessage(err)
@@ -101,5 +128,7 @@ export default {
   read,
   remove,
   update,
-  listWithAnalytics
+  readAdmin,
+  listAdmin,
+  resetVewedBy
 }
