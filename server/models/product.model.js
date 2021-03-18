@@ -42,6 +42,14 @@ const ProductSchema = new mongoose.Schema({
     min: [0, 'Negitivew views are not alloweds'],
     default: 0
   }
+  // analytics: {
+  //   ageRange: [{
+  //     type: Number
+  //   }],
+  //   roastRange: [{
+  //     type: Number
+  //   }]
+  // }
 })
 
 export default mongoose.model('Product', ProductSchema)

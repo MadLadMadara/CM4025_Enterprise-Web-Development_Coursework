@@ -23,6 +23,7 @@ import devBundle from './devBundle'
 import userRoutes from './routes/user.routes'
 import authRoutes from './routes/auth.routes'
 import productRoutes from './routes/product.routes'
+import adminRouter from './routes/admin.routes'
 
 // Pageload
 
@@ -52,6 +53,7 @@ app.use('/dist', express.static(path.join(CURRENT_WORKING_DIR, 'dist')))
 app.use('/', userRoutes)
 app.use('/', authRoutes)
 app.use('/', productRoutes)
+app.use('/', adminRouter)
 
 // ---------- React routes
 app.get('*', (req, res) => {

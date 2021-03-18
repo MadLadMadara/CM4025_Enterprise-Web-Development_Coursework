@@ -9,15 +9,19 @@ import CardMedia from '@material-ui/core/CardMedia'
 import { list } from '../product/api-products'
 import Paper from '@material-ui/core/Paper'
 import img from '../assets/images/1.jpg'
+import {  Grid } from '@material-ui/core'
+
 
 // style
 const useStyles = makeStyles(theme => ({
   root: {
-    maxWidth: 345,
-    padding: theme.spacing(3)
+    flexGrow: 1,
+    marginTop: theme.spacing(5)
   },
-  media: {
-    height: 140
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary
   }
 }))
 
@@ -34,8 +38,6 @@ export default function Home () {
       if (data && data.error) {
         console.log(data.error)
       } else {
-        console.log('Here is the user data')
-        console.log(data)
         setProducts(data)
       }
     })
@@ -46,30 +48,12 @@ export default function Home () {
   }, [])
 
   return (
-    <Paper className={classes.root} elevation={4}>
-    {products.map((item, i) => {
-      return (
-      <Card key={i}>
-        <Link to={'/product/' + item._id}>
-        <CardActionArea>
-          <CardMedia
-            className={classes.media}
-            image={img}
-            title="Contemplative Reptile"
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
-              {item.name}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              {item.description}
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-        </Link>
-      </Card>
-      )
-    })}
-    </Paper>
+    <div className={classes.root}>
+      <Grid container spacing={3}>
+        <Grid item xs={12} m={6}>
+          <Paper className={classes.paper}>xs=12</Paper>
+        </Grid>
+      </Grid>
+    </div>
   )
 }

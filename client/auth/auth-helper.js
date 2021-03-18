@@ -24,8 +24,8 @@ const auth = {
     if (auth === false) {
       return false
     } else {
-      if (auth.user.admin) { return auth } else {return false } 
-    } 
+      if (auth.user.admin) { return auth } else { return false }
+    }
   }
 }
 

@@ -2,13 +2,13 @@ import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 // Routs imported
 import Home from './core/Home'
-import Users from './user/Users'
 import Signup from './user/Signup'
 import Signin from './auth/Signin'
 import EditProfile from './user/EditProfile'
 import Profile from './user/Profile'
 import PrivateRoute from './auth/PrivateRoute'
-import UserAdmin from './user/UsersAdmin'
+import AdminRoutes from './auth/AdminRoute'
+import dashboard from './dashboard/board'
 import Menu from './core/Menu'
 import Product from './product/product'
 
@@ -18,13 +18,12 @@ const MainRouter = () => {
       <Menu />
       <Switch>
         <Route exact path='/' component={Home} />
-        <Route path='/users' component={Users} />
         <Route path='/signin' component={Signin} />
         <Route path='/signup' component={Signup} />
         <PrivateRoute path='/user/edit/:userId' component={EditProfile} />
         <PrivateRoute path='/product/:productId' component={Product} />
         <Route path='/user/:userId' component={Profile} />
-        <Route path='/useradmin/:userId' component={UserAdmin} />
+        <AdminRoutes path='/admin/dashboard/:userId' component={dashboard} />
       </Switch>
     </div>
   )

@@ -13,18 +13,7 @@ router.route('/api/products')
   .get(productCtrl.list)
 
 router.route('/api/products/:productId/:userId')
-  .get(authCtrl.requireSignin, authCtrl.hasAdminAuthorization, productCtrl.read)
-
-// admin product routes
-router.route('/api/admin/:userId')
-  .post(authCtrl.requireSignin, authCtrl.hasAdminAuthorization, productCtrl.read)
-  .get(authCtrl.requireSignin, authCtrl.hasAdminAuthorization, productCtrl.listAdmin)
-
-router.route('/api/admin/:userId/:productId')
-  .put(authCtrl.requireSignin, authCtrl.hasAdminAuthorization, productCtrl.update)
-  .delete(authCtrl.requireSignin, authCtrl.hasAdminAuthorization, productCtrl.remove)
-  .get(authCtrl.requireSignin, authCtrl.hasAdminAuthorization, productCtrl.readAdmin)
-  .put(authCtrl.requireSignin, authCtrl.hasAdminAuthorization, productCtrl.resetVewedBy)
+  .get(authCtrl.requireSignin, authCtrl.hasAuthorization, productCtrl.read)
 
 router.param('userId', userCtrl.userByID)
 router.param('productId', productCtrl.productByID)

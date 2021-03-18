@@ -17,16 +17,7 @@ const create = async (req, res) => {
     })
   }
 }
-const list = async (req, res) => {
-  try {
-    const users = await User.find().select('name email updated created admin age gender')
-    res.json(users)
-  } catch (err) {
-    return res.status(400).json({
-      error: errorHandler.getErrorMessage(err)
-    })
-  }
-}
+
 const userByID = async (req, res, next, id) => {
   try {
     const user = await User.findById(id)
@@ -77,14 +68,11 @@ const remove = async (req, res) => {
     })
   }
 }
-// admin update
 
-// 
 export default {
   create,
   userByID,
   read,
-  list,
   remove,
   update
 }

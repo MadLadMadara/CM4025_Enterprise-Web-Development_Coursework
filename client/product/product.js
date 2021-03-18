@@ -4,8 +4,7 @@ import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import auth from './../auth/auth-helper'
 import { read } from './api-products'
-import { Redirect, Link } from 'react-router-dom'
-
+import { Redirect } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
   root: theme.mixins.gutters({

@@ -49,8 +49,8 @@ const Menu = withRouter(({ history }) => (
       }
       {
         auth.isAdmin() && (<span>
-          <Link to={'/admin/' + auth.isAdmin().user._id}>
-            <Button style={isActive(history, '/admin/' + auth.isAdmin().user._id)}>Admin dashboard</Button>
+          <Link to={'/admin/dashboard/' + auth.isAdmin().user._id}>
+            <Button style={isActive(history, '/admin/dashboard/' + auth.isAdmin().user._id)}>Admin dashboard</Button>
           </Link>
         </span>)
       }
