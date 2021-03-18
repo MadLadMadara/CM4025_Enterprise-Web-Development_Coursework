@@ -3,16 +3,17 @@ import User from '../models/user.model'
 import Product from '../models/product.model'
 import extend from 'lodash/extend'
 import errorHandler from './../helpers/dbErrorHandler'
+import productAnalyitic from '../helpers/productAnalyticHelper'
 
 const createProduct = async (req, res) => {
   const product = new Product(req.body)
-
   try {
     await product.save()
     return res.status(200).json({
-      message: 'Successfully added product up!'
+      message: 'Successfully added product!'
     })
   } catch (err) {
+    console.log(err)
     return res.status(400).json({
       error: errorHandler.getErrorMessage(err)
     })
@@ -31,33 +32,8 @@ const readProduct = async (req, res) => {
 }
 const listProduct = async (req, res) => {
   try {
-    const response = []
     const products = await Product.find().populate('viewedBy', 'preferences age gender')
-    products.forEach((product) => {
-      const productRespones = {
-        views: product.views,
-        _id: product._id,
-        name: product.name,
-        rost: product.rost,
-        description: product.description,
-        price: product.price,
-        weight: product.weight,
-        analytics: {
-          age: [],
-          gender: [],
-          rost: [],
-          views: product.views,
-          preground: []
-        }
-      }
-      product.viewedBy.forEach((user) => {
-        productRespones.analytics.age.push(user.age)
-        productRespones.analytics.rost.push(user.preferences.coffee.rost)
-        // productRespones.analytics.preground.push(user.preferences.coffee.preGround)
-        productRespones.analytics.gender.push(user.gender)
-      })
-      response.push(productRespones)
-    })
+    const response = productAnalyitic.parseMultipleProductAnalyitic(products)
     res.json(response)
   } catch (err) {
     return res.status(400).json({
@@ -119,6 +95,8 @@ const invertRoleUser = async (req, res) => {
     user.admin = !user.admin
     user = extend(user, req.body)
     await user.save()
+    user.hashed_password = undefined
+    user.salt = undefined
     res.json(user)
   } catch (err) {
     return res.status('400').json({
@@ -129,7 +107,7 @@ const invertRoleUser = async (req, res) => {
 
 const listUsers = async (req, res) => {
   try {
-    const users = await User.find().select('name email updated created admin age gender')
+    const users = await User.find().select('name email updated created admin age gender preferences')
     res.json(users)
   } catch (err) {
     return res.status(400).json({

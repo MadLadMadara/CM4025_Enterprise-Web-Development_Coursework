@@ -9,7 +9,6 @@ const ProductSchema = new mongoose.Schema({
   name: {
     type: String,
     trim: true,
-    unique: 'Product already exists',
     required: 'Product name is required'
   },
   rost: {
@@ -34,7 +33,6 @@ const ProductSchema = new mongoose.Schema({
   },
   viewedBy: [{
     type: mongoose.ObjectId,
-    unique: true,
     ref: User
   }],
   views: {
@@ -42,14 +40,6 @@ const ProductSchema = new mongoose.Schema({
     min: [0, 'Negitivew views are not alloweds'],
     default: 0
   }
-  // analytics: {
-  //   ageRange: [{
-  //     type: Number
-  //   }],
-  //   roastRange: [{
-  //     type: Number
-  //   }]
-  // }
 })
 
 export default mongoose.model('Product', ProductSchema)

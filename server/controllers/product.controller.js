@@ -34,8 +34,6 @@ const read = async (req, res) => {
     const product = req.product
     product.viewedBy.push(user)
     product.views = product.viewedBy.length
-    // product.analytics.ageRange.push(user.age)
-    // product.analytics.ageRange.push(user.age)
     await product.save()
     product.viewedBy = undefined
     res.json(product)

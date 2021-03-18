@@ -1,29 +1,46 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
-import CardActionArea from '@material-ui/core/CardActionArea'
-import CardMedia from '@material-ui/core/CardMedia'
-import { list } from '../product/api-products'
-import Paper from '@material-ui/core/Paper'
 import img from '../assets/images/1.jpg'
-import {  Grid } from '@material-ui/core'
 
+import { list } from '../product/api-products'
+import GridList from '@material-ui/core/GridList'
+import GridListTile from '@material-ui/core/GridListTile'
+import GridListTileBar from '@material-ui/core/GridListTileBar'
+import ListSubheader from '@material-ui/core/ListSubheader'
+import IconButton from '@material-ui/core/IconButton'
+import InfoIcon from '@material-ui/icons/Info'
 
 // style
-const useStyles = makeStyles(theme => ({
+// const useStyles = makeStyles(theme => ({
+//   root: {
+//     flexGrow: 1,
+//     marginTop: theme.spacing(5)
+//   },
+//   paper: {
+//     padding: theme.spacing(2),
+//     textAlign: 'center',
+//     color: theme.palette.text.secondary
+//   }
+// }))
+
+const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
-    marginTop: theme.spacing(5)
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    overflow: 'hidden',
+    backgroundColor: theme.palette.background.paper,
   },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary
+  gridList: {
+    width: 500,
+    height: 450
+  },
+  icon: {
+    color: 'rgba(255, 255, 255, 0.54)',
   }
 }))
+
 
 export default function Home () {
   const classes = useStyles()
@@ -49,11 +66,25 @@ export default function Home () {
 
   return (
     <div className={classes.root}>
-      <Grid container spacing={3}>
-        <Grid item xs={12} m={6}>
-          <Paper className={classes.paper}>xs=12</Paper>
-        </Grid>
-      </Grid>
+      <GridList cellHeight={180} className={classes.gridList}>
+        <GridListTile key="Subheader" cols={4} style={{ height: '50px', width: '100%' }}>
+          <ListSubheader component="div">December</ListSubheader>
+        </GridListTile>
+        {products.map((product) => (
+          <GridListTile key={product.name}>
+            <img src={img} alt={product.name} />
+            <GridListTileBar
+              title={product.title}
+              subtitle={<span>by: {product.price}</span>}
+              actionIcon={
+                <IconButton aria-label={`info about ${product.title}`} className={classes.icon}>
+                  <InfoIcon />
+                </IconButton>
+              }
+            />
+          </GridListTile>
+        ))}
+      </GridList>
     </div>
   )
 }

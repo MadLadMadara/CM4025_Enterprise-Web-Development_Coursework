@@ -42,7 +42,7 @@ const read = (req, res) => {
 const update = async (req, res) => {
   try {
     let user = req.profile
-    user.admin = false
+    req.body.admin = user.admin
     user = extend(user, req.body)
     user.updated = Date.now()
     await user.save()

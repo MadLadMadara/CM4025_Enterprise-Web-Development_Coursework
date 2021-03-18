@@ -10,6 +10,7 @@ const router = express.Router()
 
 router.route('/api/admin/products/:userId')
   .get(authCtrl.requireSignin, authCtrl.hasAdminAuthorization, adminCtrl.listProduct)
+  .post(authCtrl.requireSignin, authCtrl.hasAdminAuthorization, adminCtrl.createProduct)
 
 router.route('/api/admin/products/:productId/:userId')
   .put(authCtrl.requireSignin, authCtrl.hasAdminAuthorization, adminCtrl.updateProduct)
