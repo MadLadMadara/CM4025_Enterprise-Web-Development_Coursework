@@ -9,9 +9,10 @@ import auth from './../auth/auth-helper'
 import { Link, withRouter } from 'react-router-dom'
 
 const isActive = (history, path) => {
-  if (history.location.pathname === path) { return { color: '#ff4081' } } else { return { color: '#ffffff' } }
+  if (history.location.pathname === path) { return { color: '#99080c' } } else { return { color: '#ffffff' } }
 }
 const Menu = withRouter(({ history }) => (
+
   <AppBar position='static'>
     <Toolbar>
       <Typography variant='h6' color='inherit'>
