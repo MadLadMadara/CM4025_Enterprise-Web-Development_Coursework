@@ -12,6 +12,8 @@ import auth from './../auth/auth-helper'
 import { read, update } from './api-user.js'
 import { Redirect } from 'react-router-dom'
 
+import MenuItem from '@material-ui/core/MenuItem'
+
 // TODO:Comments
 const useStyles = makeStyles(theme => ({
   card: {
@@ -39,16 +41,63 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
+const gendersList = [
+  {
+    value: 'male',
+    label: 'Male'
+  },
+  {
+    value: 'female',
+    label: 'Femle'
+  },
+  {
+    value: 'non-binery',
+    label: 'Non-binery'
+  },
+  {
+    value: 'other',
+    label: 'Other'
+  }
+]
+
+const groundList = [
+  {
+    value: true,
+    label: 'Pre-ground'
+  },
+  {
+    value: false,
+    label: 'Whole bean'
+  }
+]
+
+const rostList = [
+  {
+    value: 'light',
+    label: 'Light'
+  },
+  {
+    value: 'medium',
+    label: 'Medium'
+  },
+  {
+    value: 'dark',
+    label: 'Dark'
+  }
+]
+
 export default function EditProfile ({ match }) {
   const classes = useStyles()
   const [values, setValues] = useState({
     name: '',
-    about: '',
     password: '',
     email: '',
+    age: 0,
+    gender: '',
+    preGround: false,
+    rost: '',
     open: false,
-    error: '',
-    redirectToProfile: false
+    error: ''
   })
   const jwt = auth.isAuthenticated()
 
@@ -62,7 +111,7 @@ export default function EditProfile ({ match }) {
       if (data && data.error) {
         setValues({ ...values, error: data.error })
       } else {
-        setValues({ ...values, name: data.name, email: data.email, about: data.about })
+        setValues({ ...values, name: data.name, email: data.email, age: data.age, gender: data.gender, rost: data.preferences.coffee.rost, preGround: data.preferences.coffee.preGround})
       }
     })
     return function cleanup () {
@@ -73,9 +122,16 @@ export default function EditProfile ({ match }) {
   const clickSubmit = () => {
     const user = {
       name: values.name || undefined,
-      about: values.about || undefined,
       email: values.email || undefined,
-      password: values.password || undefined
+      password: values.password || undefined,
+      age: values.age || undefined,
+      gender: values.gender || undefined,
+      preferences: {
+        coffee: {
+          preGround: values.preGround || undefined,
+          rost: values.rost || undefined
+        }
+      }
     }
     update({
       userId: match.params.userId
@@ -103,18 +159,62 @@ export default function EditProfile ({ match }) {
           Edit Profile
         </Typography>
         <TextField id='name' label='Name' className={classes.textField} value={values.name} onChange={handleChange('name')} margin='normal' /><br />
-        <TextField
-          id='multiline-flexible'
-          label='About'
-          multiline
-          rows='2'
-          value={values.about}
-          onChange={handleChange('about')}
-          className={classes.textField}
-          margin='normal'
-        /><br />
+        <br />
         <TextField id='email' type='email' label='Email' className={classes.textField} value={values.email} onChange={handleChange('email')} margin='normal' /><br />
         <TextField id='password' type='password' label='Password' className={classes.textField} value={values.password} onChange={handleChange('password')} margin='normal' />
+        <TextField id='age' type='number' label='age' className={classes.textField} value={values.age} onChange={handleChange('age')} margin='normal' />
+        <TextField
+            id='gender'
+            select
+            label='gender'
+            className={classes.textField}
+            value={values.gender}
+            onChange={handleChange('gender')}
+            helperText='Select your gender'
+          >
+            {gendersList.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
+          <Typography variant='h6' className={classes.subTitle}>
+            Coffee preferences
+          </Typography>
+          <TextField
+            id='preGround'
+            select
+            label='Whole bean or pre-ground'
+            className={classes.textField}
+            value={values.preGround}
+            onChange={handleChange('preGround')}
+          >
+            {groundList.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField
+            id='rost'
+            select
+            label='Prefered coffee rost'
+            className={classes.textField}
+            value={values.rost}
+            onChange={handleChange('rost')}
+          >
+            {rostList.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
+          <br /> {
+            values.error && (<Typography component='p' color='error'>
+              <Icon color='error' className={classes.error}>error</Icon>
+              {values.error}
+                             </Typography>)
+          }
         <br /> {
             values.error && (<Typography component='p' color='error'>
               <Icon color='error' className={classes.error}>error</Icon>

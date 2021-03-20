@@ -1,23 +1,3 @@
-// iteresting idea, dynamicaly creating Analitics based on values for x, y axis that works for any metric.
-// would be good for future development
-//
-// const buildAnaliticsJSON = (metricsArra) => {
-//   const metricsJSON = []
-
-//   metricsArra.forEach((metric) => {
-//     const inArray = data.some(function (obj) {
-//       if (obj.x === metric) {
-//         obj.x += 1
-//         return true // breaks out of he loop
-//       }
-//     })
-//   })
-// }
-
-const buildGenderJSONDataset = (array) => {
-  const json = { male: 0, female: 0, 'non-binery': 0, other: 0 }
-  array
-}
 
 /**
  *

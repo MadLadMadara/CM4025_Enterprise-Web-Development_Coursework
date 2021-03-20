@@ -46,7 +46,10 @@ export default function Profile ({ match }) {
       if (data && data.error) {
         setRedirectToSignin(true)
       } else {
+        data.rost = data.preferences.coffee.rost
+        data.preGround = data.preferences.coffee.preGround
         setUser(data)
+        console.log(data)
       }
     })
 
@@ -58,6 +61,8 @@ export default function Profile ({ match }) {
   if (redirectToSignin) {
     return <Redirect to='/signin' />
   }
+  
+
   return (
     <Paper className={classes.root} elevation={4}>
       <Typography variant='h6' className={classes.title}>
@@ -83,7 +88,12 @@ export default function Profile ({ match }) {
             }
         </ListItem>
         <ListItem>
-          <ListItemText primary={user.about} />
+          <ListItemText primary={'Age'} secondary={user.age}/>
+          <ListItemText primary={'Gender'} secondary={user.gender}/>
+        </ListItem>
+        <ListItem>
+          <ListItemText primary={'Pre-ground'} secondary={user.preGround ? 'Yes' : 'No'}/>
+          <ListItemText primary={'Roast'} secondary={user.rost}/>
         </ListItem>
         <Divider />
         <ListItem>
