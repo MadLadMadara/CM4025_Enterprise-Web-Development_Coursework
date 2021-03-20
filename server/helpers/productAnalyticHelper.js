@@ -1,7 +1,28 @@
+// iteresting idea, dynamicaly creating Analitics based on values for x, y axis that works for any metric.
+// would be good for future development
+//
+// const buildAnaliticsJSON = (metricsArra) => {
+//   const metricsJSON = []
+
+//   metricsArra.forEach((metric) => {
+//     const inArray = data.some(function (obj) {
+//       if (obj.x === metric) {
+//         obj.x += 1
+//         return true // breaks out of he loop
+//       }
+//     })
+//   })
+// }
+
+const buildGenderJSONDataset = (array) => {
+  const json = { male: 0, female: 0, 'non-binery': 0, other: 0 }
+  array
+}
+
 /**
- * 
+ *
  * @param {JSON Object} product A product document from the DB
- * @returns JSON object structured simularly to product found products.model.js 
+ * @returns JSON object structured simularly to product found products.model.js
  * bur with analytics propery.s
  */
 const parseProductAnalyitic = (product) => {
@@ -14,18 +35,74 @@ const parseProductAnalyitic = (product) => {
     price: product.price,
     weight: product.weight,
     analytics: {
-      age: [],
-      gender: [],
-      rost: [],
+      age: [
+        { x: 'Under 18', y: 0 },
+        { x: '18 to 25', y: 0 },
+        { x: '26 to 50', y: 0 },
+        { x: 'over 50', y: 0 }],
+      gender: [
+        { x: 'male', y: 0 },
+        { x: 'female', y: 0 },
+        { x: 'non-binery', y: 0 },
+        { x: 'other', y: 0 }],
+      rost: [
+        { x: 'light', y: 0 },
+        { x: 'medium', y: 0 },
+        { x: 'dark', y: 0 }],
       views: product.views,
-      preground: []
+      preground: [
+        { x: 'pre-ground', y: 0 },
+        { x: 'whole-bean', y: 0 }]
     }
   }
+  // this should be done dynamicaly
+
   product.viewedBy.forEach((user) => {
-    productRespones.analytics.age.push(user.age)
-    productRespones.analytics.rost.push(user.preferences.coffee.rost)
-    productRespones.analytics.preground.push(user.preferences.coffee.preGround)
-    productRespones.analytics.gender.push(user.gender)
+    // TODO: must comment
+
+    productRespones.analytics.age.some((obj) => {
+      if (obj.x === 'Under 18' && user.age < 18) {
+        // change the value here
+        obj.y += 1
+        return true // breaks out of he loop
+      } else if (obj.x === '18 to 25' && user.age > 18 && user.age < 26) {
+        obj.y += 1
+        return true // breaks out of he loop
+      } else if (obj.x === '26 to 50' && user.age > 25 && user.age < 51) {
+        obj.y += 1
+        return true // breaks out of he loop
+      } else if (obj.x === '26 to 50' && user.age > 50) {
+        obj.y += 1
+        return true // breaks out of he loop
+      }
+    })
+
+    productRespones.analytics.preground.some((obj) => {
+      if (obj.x === 'pre-ground' && user.preferences.coffee.preGround === true) {
+        // change the value here
+        obj.y += 1
+        return true // breaks out of he loop
+      } else if (obj.x === 'whole-bean' && user.preferences.coffee.preGround === false) {
+        obj.y += 1
+        return true // breaks out of he loop
+      }
+    })
+
+    productRespones.analytics.rost.some((obj) => {
+      if (obj.x === user.preferences.coffee.rost) {
+        // change the value here
+        obj.y += 1
+        return true // breaks out of he loop
+      }
+    })
+
+    productRespones.analytics.gender.some((obj) => {
+      if (obj.x === user.gender) {
+        // change the value here
+        obj.y += 1
+        return true // breaks out of he loop
+      }
+    })
   })
   return productRespones
 }

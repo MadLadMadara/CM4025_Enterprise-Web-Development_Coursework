@@ -1,31 +1,42 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
-import CardActionArea from '@material-ui/core/CardActionArea'
-import CardMedia from '@material-ui/core/CardMedia'
 import { listProducts, listUsers } from './api-admin'
 import Paper from '@material-ui/core/Paper'
-import img from '../assets/images/1.jpg'
+import Grid from '@material-ui/core/Grid'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
+import Divider from '@material-ui/core/Divider'
+import { VictoryBar, VictoryChart, VictoryTheme} from 'victory'
+
 import auth from './../auth/auth-helper'
+
+
 
 // style
 const useStyles = makeStyles(theme => ({
-  root: {
-    maxWidth: 345,
-    padding: theme.spacing(3)
-  },
-  media: {
-    height: 140
+  root: theme.mixins.gutters({
+    maxWidth: 'auto',
+    margin: 'auto',
+    padding: theme.spacing(3),
+    marginTop: theme.spacing(3)
+  }),
+  title: {
+    marginTop: theme.spacing(3),
+    marginLeft: theme.spacing(3),
+    color: theme.palette.protectedTitle
   }
 }))
+
 
 export default function Home ({ match }) {
   const classes = useStyles()
   const [products, setProducts] = useState([])
-  const [users, setUsers] = useState([])
+  const [popup, setUsers] = useState({
+    open: true
+  })
   const jwt = auth.isAuthenticated()
 
   useEffect(() => {
@@ -75,10 +86,95 @@ export default function Home ({ match }) {
   }, [])
 
   return (
-    <Paper className={classes.root} elevation={4}>
-    {products.map((item, i) => {
-      return (
-      
-    </Paper>
+    <Grid container spacing={3} className={classes.root} >
+    <Grid item xs={12}>
+      </Grid>
+      <Grid item xs={12}>
+        <Typography variant='h5' className={classes.title}>
+          Product listings
+        </Typography>
+      </Grid>
+      {products.map((product, i) => {
+        return (
+        <Grid item md={12} lg={6} key={i}>
+          <Paper className={classes.paper} elevation={5}>
+            <List dense>
+              <ListItem>
+                <ListItemText primary={'Name'} secondary={product.name}/>
+              </ListItem>
+              <ListItem>
+                <ListItemText primary={'Price'} secondary={'£' + product.price}/>
+                <ListItemText primary={'Weight'} secondary={product.weight + 'g'}/>
+                <ListItemText primary={'Roast type'} secondary={product.rost}/>
+              </ListItem>
+              <Divider />
+              <ListItem>
+                <ListItemText primary={'Description'} secondary={product.description}/>
+              </ListItem>
+              <ListItem>
+                <ListItemText primary={'Views'} secondary={product.views}/>
+              </ListItem>
+            </List>
+            <Divider />
+            <Grid container spacing={3} className={classes.root} >
+              <Grid item xs={12}>
+              <Typography variant='h5'>
+                    click-through demographics
+                </Typography>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4} lg={6}>
+                <Typography variant='h7'>
+                    Age
+                </Typography>
+                <VictoryChart
+                    theme={VictoryTheme.material}
+                    domainPadding={10}>
+                  <VictoryBar
+                    data={product.analytics.age}
+                  />
+                </VictoryChart>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4} lg={6}>
+                <Typography variant='h7'>
+                    Gender
+                </Typography>
+                <VictoryChart
+                    theme={VictoryTheme.material}
+                    domainPadding={10}>
+                  <VictoryBar
+                    data={product.analytics.gender}
+                  />
+                </VictoryChart>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4} lg={6}>
+                <Typography variant='h7'>
+                    Roast prefrence
+                </Typography>
+                <VictoryChart
+                    theme={VictoryTheme.material}
+                    domainPadding={10}>
+                  <VictoryBar
+                    data={product.analytics.rost}
+                  />
+                </VictoryChart>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4} lg={6}>
+                <Typography variant='h7'>
+                    Whole-bean or pre-ground
+                </Typography>
+                <VictoryChart
+                    theme={VictoryTheme.material}
+                    domainPadding={10}>
+                  <VictoryBar
+                    data={product.analytics.preground}
+                  />
+                </VictoryChart>
+              </Grid>
+            </Grid>
+          </Paper>
+        </Grid>
+        )
+      })}
+    </Grid>
   )
 }

@@ -76,6 +76,11 @@ export default function Home () {
             <GridListTileBar
               title={product.name}
               subtitle={<span>Price: £{product.price} <br/>Weight: {product.weight}g</span>}
+              actionIcon={
+                <IconButton aria-label={`info about ${product.name}`} className={classes.icon}>
+                  <InfoIcon />
+                </IconButton>
+              }
             />
             </Link>
           </GridListTile>

@@ -52,6 +52,9 @@ const Menu = withRouter(({ history }) => (
           <Link to={'/admin/dashboard/' + auth.isAdmin().user._id}>
             <Button style={isActive(history, '/admin/dashboard/' + auth.isAdmin().user._id)}>Admin dashboard</Button>
           </Link>
+          <Link to={'/admin/CreateProduct/' + auth.isAdmin().user._id}>
+            <Button style={isActive(history, '/admin/CreateProduct/' + auth.isAdmin().user._id)}>Create product</Button>
+          </Link>
         </span>)
       }
     </Toolbar>

@@ -11,6 +11,7 @@ import AdminRoutes from './auth/AdminRoute'
 import dashboard from './dashboard/board'
 import Menu from './core/Menu'
 import Product from './product/product'
+import CreateProduct from './dashboard/CreateProduct'
 
 const MainRouter = () => {
   return (
@@ -24,6 +25,7 @@ const MainRouter = () => {
         <PrivateRoute path='/product/:productId' component={Product} />
         <Route path='/user/:userId' component={Profile} />
         <AdminRoutes path='/admin/dashboard/:userId' component={dashboard} />
+        <AdminRoutes path='/admin/CreateProduct/:userId' component={CreateProduct} />
       </Switch>
     </div>
   )

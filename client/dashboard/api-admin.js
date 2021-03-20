@@ -15,6 +15,23 @@ const listProducts = async (params, credentials, signal) => {
     console.log(err)
   }
 }
+const createProduct = async (params, credentials, product) => {
+  try {
+    const response = await fetch('/api/admin/products/' +
+    params.userId, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + credentials.t
+      },
+      body: JSON.stringify(product)
+    })
+    return await response.json()
+  } catch (err) {
+    console.log(err)
+  }
+}
 const updateProduct = async (params, credentials, product) => {
   try {
     const response = await fetch('/api/admin/products/' +
@@ -134,5 +151,6 @@ export {
   readProduct,
   resetViewsProduct,
   listUsers,
-  invertRoleUser
+  invertRoleUser,
+  createProduct
 }
