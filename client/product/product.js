@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
+
 import Typography from '@material-ui/core/Typography'
+import ListSubheader from '@material-ui/core/ListSubheader'
+
+import Divider from '@material-ui/core/Divider'
 import auth from './../auth/auth-helper'
 import { read } from './api-products'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
   root: theme.mixins.gutters({
@@ -50,9 +57,23 @@ export default function Profile ({ match }) {
   }
   return (
     <Paper className={classes.root} elevation={4}>
-      <Typography variant='h6' className={classes.title}>
+      <Typography variant='h5' className={classes.title}>
         {product.name}
       </Typography>
+      <List dense>
+        <ListItem>
+          <ListItemText primary={'Price'} secondary={'£'+ product.price}/>
+          <ListItemText primary={'Weight'} secondary={product.weight + 'g'}/>
+          <ListItemText primary={'Roast type'} secondary={product.rost}/>
+        </ListItem>
+        <Divider />
+        <ListItem>
+          <ListItemText primary={'Description'} secondary={product.description}/>
+        </ListItem>
+        <ListItem>
+          <ListItemText primary={'Views'} secondary={product.views}/>
+        </ListItem>
+      </List>
     </Paper>
   )
 }

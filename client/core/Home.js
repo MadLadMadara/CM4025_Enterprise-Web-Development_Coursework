@@ -30,17 +30,16 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     justifyContent: 'space-around',
     overflow: 'hidden',
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.background.paper
   },
   gridList: {
-    width: 500,
-    height: 450
+    width: '100%',
+    height: '100%'
   },
   icon: {
-    color: 'rgba(255, 255, 255, 0.54)',
+    color: 'rgba(255, 255, 255, 0.54)'
   }
 }))
-
 
 export default function Home () {
   const classes = useStyles()
@@ -66,22 +65,19 @@ export default function Home () {
 
   return (
     <div className={classes.root}>
-      <GridList cellHeight={180} className={classes.gridList}>
-        <GridListTile key="Subheader" cols={4} style={{ height: '50px', width: '100%' }}>
-          <ListSubheader component="div">December</ListSubheader>
+      <GridList cellHeight={'180'} className={classes.gridList} cols={3}>
+        <GridListTile key="Subheader" cols={4} style={{ height: 'auto', width: '100%' }}>
+          <ListSubheader component="div">Coffee products</ListSubheader>
         </GridListTile>
         {products.map((product) => (
-          <GridListTile key={product.name}>
+          <GridListTile key={product.name} cols={1}>
             <img src={img} alt={product.name} />
+            <Link to={'/product/' + product._id}>
             <GridListTileBar
-              title={product.title}
-              subtitle={<span>by: {product.price}</span>}
-              actionIcon={
-                <IconButton aria-label={`info about ${product.title}`} className={classes.icon}>
-                  <InfoIcon />
-                </IconButton>
-              }
+              title={product.name}
+              subtitle={<span>Price: £{product.price} <br/>Weight: {product.weight}g</span>}
             />
+            </Link>
           </GridListTile>
         ))}
       </GridList>

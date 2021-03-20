@@ -78,27 +78,7 @@ export default function Home ({ match }) {
     <Paper className={classes.root} elevation={4}>
     {products.map((item, i) => {
       return (
-      <Card key={i}>
-        <Link to={'/product/' + item._id}>
-        <CardActionArea>
-          <CardMedia
-            className={classes.media}
-            image={img}
-            title="Contemplative Reptile"
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
-              {item.name}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              {item.description}
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-        </Link>
-      </Card>
-      )
-    })}
+      
     </Paper>
   )
 }
