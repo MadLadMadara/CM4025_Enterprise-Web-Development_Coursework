@@ -2,18 +2,21 @@ import React, { useState, useEffect } from 'react'
 
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
-import { listProducts, listUsers } from './api-admin'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import Divider from '@material-ui/core/Divider'
-import { VictoryBar, VictoryChart, VictoryTheme} from 'victory'
+import IconButton from '@material-ui/core/IconButton'
+import DeleteIcon from '@material-ui/icons/Delete'
+import RestartIcon from '@material-ui/icons/RestorePageRounded'
+
+import { listProducts, removeProduct, resetViewsProduct } from './api-admin'
+
+import { VictoryBar, VictoryChart, VictoryTheme } from 'victory'
 
 import auth from './../auth/auth-helper'
-
-
 
 // style
 const useStyles = makeStyles(theme => ({
@@ -30,16 +33,12 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-
 export default function Home ({ match }) {
   const classes = useStyles()
   const [products, setProducts] = useState([])
-  const [popup, setUsers] = useState({
-    open: true
-  })
   const jwt = auth.isAuthenticated()
 
-  useEffect(() => {
+  const loadProductDate = () => {
     const abortController = new AbortController()
     const signal = abortController.signal
 
@@ -51,8 +50,6 @@ export default function Home ({ match }) {
       if (data && data.error) {
         console.log(data.error)
       } else {
-        console.log('Here is the user data')
-        console.log(data)
         setProducts(data)
       }
     })
@@ -60,35 +57,33 @@ export default function Home ({ match }) {
     return function cleanup () {
       abortController.abort()
     }
+  }
+  useEffect(() => {
+    loadProductDate()
   }, [])
 
-  useEffect(() => {
+  const deleteProduct = (productId) => {
     const abortController = new AbortController()
     const signal = abortController.signal
 
-    listUsers({
+    removeProduct({
+      productId: productId,
       userId: match.params.userId
-    }, {
-      t: jwt.token
-    }, signal).then((data) => {
-      if (data && data.error) {
-        console.log(data.error)
-      } else {
-        console.log('users')
-        console.log(data)
-        setUsers(data)
-      }
+    }, { t: jwt.token }, signal).then((data) => {
+      loadProductDate()
     })
+  }
 
-    return function cleanup () {
-      abortController.abort()
-    }
-  }, [])
-
+  const resetProduct = (productId) => {
+    resetViewsProduct({
+      productId: productId,
+      userId: match.params.userId
+    }, { t: jwt.token }).then((data) => {
+      loadProductDate()
+    })
+  }
   return (
     <Grid container spacing={3} className={classes.root} >
-    <Grid item xs={12}>
-      </Grid>
       <Grid item xs={12}>
         <Typography variant='h5' className={classes.title}>
           Product listings
@@ -114,6 +109,12 @@ export default function Home ({ match }) {
               <ListItem>
                 <ListItemText primary={'Views'} secondary={product.views}/>
               </ListItem>
+              <IconButton aria-label='Delete' onClick={() => deleteProduct(product._id)} color='secondary'>
+                <DeleteIcon />
+              </IconButton>
+              <IconButton aria-label='Reset' onClick={() => resetProduct(product._id)} color='secondary'>
+                <RestartIcon />
+              </IconButton>
             </List>
             <Divider />
             <Grid container spacing={3} className={classes.root} >
