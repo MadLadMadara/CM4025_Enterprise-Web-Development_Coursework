@@ -1,6 +1,13 @@
-// TODO:Comment
-
+/* eslint-disable react/prop-types */
+/**
+ * @fileoverview React component that serves as the edit profile page
+ * @exports EditProfile
+ * @author Sam McRuvie
+ */
+// ----React package/imports
 import React, { useState, useEffect } from 'react'
+import { Redirect } from 'react-router-dom'
+// ----Material-ui package/imports
 import Card from '@material-ui/core/Card'
 import CardActions from '@material-ui/core/CardActions'
 import CardContent from '@material-ui/core/CardContent'
@@ -9,12 +16,12 @@ import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import Icon from '@material-ui/core/Icon'
 import { makeStyles } from '@material-ui/core/styles'
+import MenuItem from '@material-ui/core/MenuItem'
+// ----Project imports
 import auth from './../auth/auth-helper'
 import { read, update } from './api-user.js'
-import { Redirect } from 'react-router-dom'
 
-import MenuItem from '@material-ui/core/MenuItem'
-
+// material-ui javascript object for JSX component styling
 const useStyles = makeStyles(theme => ({
   card: {
     maxWidth: 600,
@@ -41,6 +48,11 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
+/**
+ * @name gendersList
+ * @type {Array<JSON>}
+ * @descripting list of genders
+ */
 const gendersList = [
   {
     value: 'male',
@@ -60,6 +72,11 @@ const gendersList = [
   }
 ]
 
+/**
+ * @name groundList
+ * @type {Array<JSON>}
+ * @descripting list of ground preferances
+ */
 const groundList = [
   {
     value: true,
@@ -71,6 +88,11 @@ const groundList = [
   }
 ]
 
+/**
+ * @name rostList
+ * @type {Array<JSON>}
+ * @descripting list of roast preferances
+ */
 const rostList = [
   {
     value: 'light',
@@ -85,9 +107,14 @@ const rostList = [
     label: 'Dark'
   }
 ]
-
+/**
+ * @name EditProfile
+ * @param {JSON} match contains '.params' passesd to component like props
+ * @returns {JSX} the EditProfile component
+ */
 export default function EditProfile ({ match }) {
-  const classes = useStyles()
+  const classes = useStyles() // init material-ui style
+  // state storage of user form 'vlaues'
   const [values, setValues] = useState({
     name: '',
     password: '',
@@ -99,27 +126,29 @@ export default function EditProfile ({ match }) {
     open: false,
     error: ''
   })
+  // gets admin users session data from 'jwt' token
   const jwt = auth.isAuthenticated()
 
-  useEffect(() => {
+  useEffect(() => { // executes on load as a ""side efect""
+    // used incase the request need to be aborted mid request
     const abortController = new AbortController()
     const signal = abortController.signal
-
+    // 'read' from './api-user.js.js', sends request to get one user data
     read({
       userId: match.params.userId
     }, { t: jwt.token }, signal).then((data) => {
       if (data && data.error) {
         setValues({ ...values, error: data.error })
       } else {
-        setValues({ ...values, name: data.name, email: data.email, age: data.age, gender: data.gender, rost: data.preferences.coffee.rost, preGround: data.preferences.coffee.preGround})
+        setValues({ ...values, name: data.name, email: data.email, age: data.age, gender: data.gender, rost: data.preferences.coffee.rost, preGround: data.preferences.coffee.preGround })
       }
     })
-    return function cleanup () {
+    return function cleanup () { // aborts request
       abortController.abort()
     }
   }, [match.params.userId])
 
-  const clickSubmit = () => {
+  const clickSubmit = () => { // form submit handeler
     const user = {
       name: values.name || undefined,
       email: values.email || undefined,
@@ -133,26 +162,33 @@ export default function EditProfile ({ match }) {
         }
       }
     }
+    // 'update' from './api-user.js.js', sends request to update a users data
     update({
       userId: match.params.userId
     }, {
       t: jwt.token
     }, user).then((data) => {
       if (data && data.error) {
-        setValues({ ...values, error: data.error })
+        setValues({ ...values, error: data.error }) // if error, reset vlaues with error message
       } else {
+        // if no error, set jwt token and redirect
         setValues({ ...values, userId: data._id, redirectToProfile: true })
       }
     })
   }
+  s/**
+   * @name handleChange
+   * @description updates state 'values' on form input on change
+   * @param {String} name propert name in state 'values'
+   */
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value })
   }
-
+  // renders JSX if redirectToReferrer from state 'values' is true, redirects user
   if (values.redirectToProfile) {
     return (<Redirect to={'/user/' + values.userId} />)
   }
-  return (
+  return ( // JSX to of EditProfile component
     <Card className={classes.card}>
       <CardContent>
         <Typography variant='h6' className={classes.title}>

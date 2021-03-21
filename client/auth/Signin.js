@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 /**
  * @fileoverview React component that serves as the sign in pages,
- * used in '../MainRouter.js'
  * @exports Signin
  * @author Sam McRuvie
  */
@@ -57,13 +56,7 @@ const useStyles = makeStyles(theme => ({
  */
 export default function Signin (props) {
   const classes = useStyles() // init material-ui style
-  /**
-   * @description state values of signin form data & seter method
-   * @property {String} values.email users email address
-   * @property {String} values.password users password
-   * @property {String} values.error error respons from from server on submition
-   * @property {Boolean} values.redirectToReferrer if true, redirect user
-   */
+  // state storage of form data
   const [values, setValues] = useState({
     email: '',
     password: '',
@@ -93,7 +86,7 @@ export default function Signin (props) {
     })
   }
   /**
-   * @name handleChange updates state 'values' on form input change
+   * @name handleChange 
    * @description updates state 'values' on form input on change
    * @param {String} name propert name in state 'values'
    */
@@ -117,8 +110,8 @@ export default function Signin (props) {
   if (redirectToReferrer) {
     return (<Redirect to={from} />)
   }
-  // JSX to of signin component
-  return (
+
+  return ( // JSX to of signin component
     <Card className={classes.card}>
       <CardContent>
         <Typography variant='h6' className={classes.title}>

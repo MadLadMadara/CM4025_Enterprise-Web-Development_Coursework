@@ -1,5 +1,13 @@
-// TODO:Comment
+/* eslint-disable react/prop-types */
+/**
+ * @fileoverview React component that serves as the profile page
+ * @exports Profile
+ * @author Sam McRuvie
+ */
+// ----React package/imports
 import React, { useState, useEffect } from 'react'
+import { Redirect, Link } from 'react-router-dom'
+// ----Material-ui package/imports
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import List from '@material-ui/core/List'
@@ -13,11 +21,12 @@ import Typography from '@material-ui/core/Typography'
 import Edit from '@material-ui/icons/Edit'
 import Person from '@material-ui/icons/Person'
 import Divider from '@material-ui/core/Divider'
+// ----Project imports
 import DeleteUser from './DeleteUser'
 import auth from './../auth/auth-helper'
 import { read } from './api-user.js'
-import { Redirect, Link } from 'react-router-dom'
 
+// material-ui javascript object for JSX component styling
 const useStyles = makeStyles(theme => ({
   root: theme.mixins.gutters({
     maxWidth: 600,
@@ -30,40 +39,46 @@ const useStyles = makeStyles(theme => ({
     color: theme.palette.protectedTitle
   }
 }))
-
+/**
+ * @name Profile
+ * @param {JSON} match contains '.params' passesd to component like props
+ * @returns {JSX} the Profile component
+ */
 export default function Profile ({ match }) {
-  const classes = useStyles()
-  const [user, setUser] = useState({})
-  const [redirectToSignin, setRedirectToSignin] = useState(false)
+  const classes = useStyles() // init material-ui style
+  const [user, setUser] = useState({}) // state storage of user data
+  const [redirectToSignin, setRedirectToSignin] = useState(false) // state storage of 'redirectToSignin'
+  // gets users session data from 'jwt' token
   const jwt = auth.isAuthenticated()
 
-  useEffect(() => {
+  useEffect(() => { // executes on load as a ""side efect""
     const abortController = new AbortController()
     const signal = abortController.signal
-
+    // 'read' from './api-user.js', sends request to get single user
     read({
       userId: match.params.userId
     }, { t: jwt.token }, signal).then((data) => {
-      if (data && data.error) {
+      if (data && data.error) { // set state setRedirectToSignin to true if error
         setRedirectToSignin(true)
       } else {
+        // set prefrences
         data.rost = data.preferences.coffee.rost
         data.preGround = data.preferences.coffee.preGround
+        // update state 'user' with retrived user
         setUser(data)
-        console.log(data)
       }
     })
 
-    return function cleanup () {
+    return function cleanup () { // aborts request
       abortController.abort()
     }
   }, [match.params.userId])
-
+  // renders JSX if redirectToReferrer from state 'redirectToSignin' is true, redirects user
   if (redirectToSignin) {
     return <Redirect to='/signin' />
   }
 
-  return (
+  return ( // JSX to of signin component
     <Paper className={classes.root} elevation={4}>
       <Typography variant='h6' className={classes.title}>
         Profile

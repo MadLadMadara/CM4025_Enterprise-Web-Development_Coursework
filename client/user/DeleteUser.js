@@ -1,4 +1,8 @@
-// TODO:Comment
+/**
+ * @fileoverview React component that handels delete user Dialog
+ * @exports DeleteUser
+ * @author Sam McRuvie
+ */
 // ----React package/imports
 import React, { useState } from 'react'
 import { Redirect } from 'react-router-dom'
@@ -15,7 +19,11 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 // ----Project imports
 import auth from './../auth/auth-helper'
 import { remove } from './api-user.js'
-
+/**
+ * @name DeleteUser
+ * @param {JSON} props must contains '.userId'
+ * @returns {JSX} the DeleteUser component
+ */
 export default function DeleteUser (props) {
   const [open, setOpen] = useState(false)
   const [redirect, setRedirect] = useState(false)

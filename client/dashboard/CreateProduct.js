@@ -59,7 +59,7 @@ const useStyles = makeStyles(theme => ({
 
 /**
  * @name rostList
- * @type {Array}
+ * @type {Array<JSON>}
  * @descripting list of acceptible roast styles
  */
 const rostList = [
