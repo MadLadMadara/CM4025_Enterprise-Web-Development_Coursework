@@ -1,5 +1,9 @@
+// TODO:Comment
+// ----React package/imports
 import React, { useState } from 'react'
+import { Redirect } from 'react-router-dom'
 import PropTypes from 'prop-types'
+// ----Material-ui package/imports
 import IconButton from '@material-ui/core/IconButton'
 import Button from '@material-ui/core/Button'
 import DeleteIcon from '@material-ui/icons/Delete'
@@ -8,38 +12,45 @@ import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
+// ----Project imports
 import auth from './../auth/auth-helper'
 import { remove } from './api-user.js'
-import { Redirect } from 'react-router-dom'
 
 export default function DeleteUser (props) {
   const [open, setOpen] = useState(false)
   const [redirect, setRedirect] = useState(false)
-
+  // gets users session data from 'jwt' token
   const jwt = auth.isAuthenticated()
-  const clickButton = () => {
+
+  const clickButton = () => { // handeler for setting open, sets state 'open' true
     setOpen(true)
   }
+  /**
+   * @name deleteAccount
+   * @description deletes user with 'props.userId'
+   */
   const deleteAccount = () => {
+    // 'remove' form './api-user.js' Sends request to remove user
     remove({
       userId: props.userId
     }, { t: jwt.token }).then((data) => {
       if (data && data.error) {
-        console.log(data.error)
+        // console.log(data.error)
       } else {
-        auth.clearJWT(() => console.log('deleted'))
-        setRedirect(true)
+        auth.clearJWT() // cleare session storage 
+        setRedirect(true) // set state 'redirect' to true
       }
     })
   }
-  const handleRequestClose = () => {
+
+  const handleRequestClose = () => { // handeler for setting open, sets state 'open' false
     setOpen(false)
   }
 
-  if (redirect) {
+  if (redirect) { // redirects user to signin if redirectToSignin is true, loads JSX
     return <Redirect to='/' />
   }
-  return (
+  return ( // JSX of DeleteUser component
     <span>
       <IconButton aria-label='Delete' onClick={clickButton} color='secondary'>
         <DeleteIcon />
@@ -64,6 +75,7 @@ export default function DeleteUser (props) {
     </span>
   )
 }
+// required props type
 DeleteUser.propTypes = {
   userId: PropTypes.string.isRequired
 }

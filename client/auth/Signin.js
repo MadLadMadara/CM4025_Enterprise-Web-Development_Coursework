@@ -1,4 +1,15 @@
+/* eslint-disable react/prop-types */
+/**
+ * @fileoverview React component that serves as the sign in pages,
+ * used in '../MainRouter.js'
+ * @exports Signin
+ * @author Sam McRuvie
+ */
+
+// ----React package/imports
 import React, { useState } from 'react'
+import { Redirect } from 'react-router-dom'
+// ----Material-ui package/imports
 import Card from '@material-ui/core/Card'
 import CardActions from '@material-ui/core/CardActions'
 import CardContent from '@material-ui/core/CardContent'
@@ -7,10 +18,11 @@ import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import Icon from '@material-ui/core/Icon'
 import { makeStyles } from '@material-ui/core/styles'
+// ----Project imports
 import auth from './../auth/auth-helper'
-import { Redirect } from 'react-router-dom'
 import { signin } from './api-auth.js'
 
+// material-ui javascript object for JSX component styling
 const useStyles = makeStyles(theme => ({
   card: {
     maxWidth: 600,
@@ -36,9 +48,22 @@ const useStyles = makeStyles(theme => ({
     marginBottom: theme.spacing(2)
   }
 }))
-
+/**
+ * @name Signin
+ * @description React component foer signin page
+ * @param {JSON} props contains/uses 'props.location.state' for passing state
+ * between components
+ * @returns JSX of signin component
+ */
 export default function Signin (props) {
-  const classes = useStyles()
+  const classes = useStyles() // init material-ui style
+  /**
+   * @description state values of signin form data & seter method
+   * @property {String} values.email users email address
+   * @property {String} values.password users password
+   * @property {String} values.error error respons from from server on submition
+   * @property {Boolean} values.redirectToReferrer if true, redirect user
+   */
   const [values, setValues] = useState({
     email: '',
     password: '',
@@ -46,37 +71,53 @@ export default function Signin (props) {
     redirectToReferrer: false
   })
 
+  /**
+   * @name clickSubmit
+   * @description login form submit handeler, submits state 'values' to server
+   */
   const clickSubmit = () => {
-    const user = {
+    const user = { // set up json request data
       email: values.email || undefined,
       password: values.password || undefined
     }
-
+    // Send user data request to server
     signin(user).then((data) => {
-      if (data.error) {
+      if (data.error) { // if error, reset vlaues with error message
         setValues({ ...values, error: data.error })
       } else {
+        // if no error, set jwt token and redirect
         auth.authenticate(data, () => {
           setValues({ ...values, error: '', redirectToReferrer: true })
         })
       }
     })
   }
-
+  /**
+   * @name handleChange updates state 'values' on form input change
+   * @description updates state 'values' on form input on change
+   * @param {String} name propert name in state 'values'
+   */
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value })
   }
-
+  /**
+   * @name from
+   * @description gets redirection path based on 'props.location.state' if
+   * set else returns '/'
+   * @returns {String} Router path
+   */
   const { from } = props.location.state || {
     from: {
       pathname: '/'
     }
   }
-  const { redirectToReferrer } = values
+
+  const { redirectToReferrer } = values // gets redirectToReferrer from state 'values'
+  // renders JSX if redirectToReferrer from state 'values' is true, redirects user
   if (redirectToReferrer) {
     return (<Redirect to={from} />)
   }
-
+  // JSX to of signin component
   return (
     <Card className={classes.card}>
       <CardContent>

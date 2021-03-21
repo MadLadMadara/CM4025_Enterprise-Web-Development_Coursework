@@ -1,4 +1,5 @@
-/* eslint-disable react/prop-types */
+// TODO:Comment
+
 import React, { useState, useEffect } from 'react'
 import Card from '@material-ui/core/Card'
 import CardActions from '@material-ui/core/CardActions'
@@ -14,7 +15,6 @@ import { Redirect } from 'react-router-dom'
 
 import MenuItem from '@material-ui/core/MenuItem'
 
-// TODO:Comments
 const useStyles = makeStyles(theme => ({
   card: {
     maxWidth: 600,

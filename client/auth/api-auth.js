@@ -1,4 +1,16 @@
-// TODO:need to comment
+/**
+ * @fileoverview api request functions for users signin and out.
+ * @exports signin
+ * @exports signout
+ * @author Sam McRuvie
+ */
+
+/**
+ * @name signin
+ * @description Singns in user based on email and password by sending request to server
+ * @param {JSON} user users object constaining propertys name and email
+ * @returns {JSON} User data containing name, gender, age. preferences
+ */
 const signin = async (user) => {
   try {
     const response = await fetch('/auth/signin/', {
@@ -16,6 +28,11 @@ const signin = async (user) => {
   }
 }
 
+/**
+ * @name signout
+ * @descripting signs out user by sending request to server, and clearing JWT cookie
+ * @returns {JSON} With with propert 'message'
+ */
 const signout = async () => {
   try {
     const response = await fetch('/auth/signout/', { method: 'GET' })

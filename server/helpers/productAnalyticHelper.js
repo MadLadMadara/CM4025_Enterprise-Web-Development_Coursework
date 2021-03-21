@@ -1,6 +1,13 @@
 
+// TODO:Comment
 /**
- *
+ * @fileoverview s
+ * @exports parseProductAnalyitic
+ * @exports parseMultipleProductAnalyitic
+ */
+
+/**
+ * @name parseProductAnalyitic
  * @param {JSON Object} product A product document from the DB
  * @returns JSON object structured simularly to product found products.model.js
  * bur with analytics propery.s
@@ -87,7 +94,7 @@ const parseProductAnalyitic = (product) => {
   return productRespones
 }
 /**
- *
+ * @description
  * @param {JSON} products A JSON array containing a list of products
  * @returns Same array but with '.analytics' added to each product
  * JSON Object. See 'parseProductAnalyitic()' in this file.

@@ -1,5 +1,6 @@
+// TODO:Comment
+
 import { createMuiTheme } from '@material-ui/core/styles'
-import { pink } from '@material-ui/core/colors'
 const theme = createMuiTheme({
   typography: {
     useNextVariants: true

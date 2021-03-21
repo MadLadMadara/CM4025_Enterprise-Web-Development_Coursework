@@ -1,3 +1,4 @@
+// TODO:Comment
 import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
@@ -61,7 +62,6 @@ export default function Profile ({ match }) {
   if (redirectToSignin) {
     return <Redirect to='/signin' />
   }
-  
 
   return (
     <Paper className={classes.root} elevation={4}>
