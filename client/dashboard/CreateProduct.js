@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /**
  * @fileoverview React component that serves as the create product page
  * @exports CreateProduct
@@ -106,7 +107,7 @@ export default function CreateProduct ({ match }) {
   // gets admin users session data from 'jwt' token
   const jwt = auth.isAdmin()
 
- /**
+  /**
    * @name clickSubmit
    * @description create product form submit handeler, submits state 'values' to server
    */

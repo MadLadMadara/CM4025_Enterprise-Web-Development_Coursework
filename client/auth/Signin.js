@@ -86,7 +86,7 @@ export default function Signin (props) {
     })
   }
   /**
-   * @name handleChange 
+   * @name handleChange
    * @description updates state 'values' on form input on change
    * @param {String} name propert name in state 'values'
    */

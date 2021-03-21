@@ -1,5 +1,13 @@
-// TODO:Comment
+/* eslint-disable react/prop-types */
+/**
+ * @fileoverview React component that serves as the signup pages
+ * @exports Signup
+ * @author Sam McRuvie
+ */
+// ----React package/imports
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
+// ----Material-ui package/imports
 import Card from '@material-ui/core/Card'
 import CardActions from '@material-ui/core/CardActions'
 import CardContent from '@material-ui/core/CardContent'
@@ -8,15 +16,16 @@ import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import Icon from '@material-ui/core/Icon'
 import { makeStyles } from '@material-ui/core/styles'
-import { create } from './api-user.js'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import MenuItem from '@material-ui/core/MenuItem'
-import { Link } from 'react-router-dom'
+// ----Project import
+import { create } from './api-user.js'
 
+// material-ui javascript object for JSX component styling
 const useStyles = makeStyles(theme => ({
   card: {
     maxWidth: 600,
@@ -48,6 +57,11 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
+/**
+ * @name gendersList
+ * @type {Array<JSON>}
+ * @descripting list of genders
+ */
 const gendersList = [
   {
     value: 'male',
@@ -67,6 +81,11 @@ const gendersList = [
   }
 ]
 
+/**
+ * @name groundList
+ * @type {Array<JSON>}
+ * @descripting list of ground preferances
+ */
 const groundList = [
   {
     value: true,
@@ -77,7 +96,11 @@ const groundList = [
     label: 'Whole bean'
   }
 ]
-
+/**
+ * @name rostList
+ * @type {Array<JSON>}
+ * @descripting list of roast preferances
+ */
 const rostList = [
   {
     value: 'light',
@@ -93,8 +116,13 @@ const rostList = [
   }
 ]
 
+/**
+ * @name Signup
+ * @returns {JSX} the Signup component
+ */
 export default function Signup () {
   const classes = useStyles()
+  // state storage of user form 'vlaues'
   const [values, setValues] = useState({
     name: '',
     password: '',
@@ -107,13 +135,17 @@ export default function Signup () {
     error: ''
   })
 
+  /**
+   * @name handleChange
+   * @description updates state 'values' on form input on change
+   * @param {String} name propert name in state 'values'
+   */
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value })
-    console.log(name)
   }
 
-  const clickSubmit = () => {
-    const user = {
+  const clickSubmit = () => { // form submit handeler
+    const user = { // prepare state 'vlaues' for JSON request
       name: values.name || undefined,
       email: values.email || undefined,
       password: values.password || undefined,
@@ -126,10 +158,12 @@ export default function Signup () {
         }
       }
     }
+    // 'create' from './api-user.js.js', sends request to create a user
     create(user).then((data) => {
       if (data.error) {
-        setValues({ ...values, error: data.error })
+        setValues({ ...values, error: data.error }) // if error, reset vlaues with error message
       } else {
+        // if no error, set jwt token and redirect
         setValues({ ...values, error: '', open: true })
       }
     })

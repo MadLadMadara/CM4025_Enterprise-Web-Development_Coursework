@@ -1,6 +1,11 @@
-// TODO:Comment
-
+/**
+ * @fileoverview material-ui styles global style settings
+ * @exports theme
+ * @author Sam McRuvie
+ */
+// ----Material-ui package/imports
 import { createMuiTheme } from '@material-ui/core/styles'
+// ----Material-ui Global Theam
 const theme = createMuiTheme({
   typography: {
     useNextVariants: true

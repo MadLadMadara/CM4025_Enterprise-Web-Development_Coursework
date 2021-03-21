@@ -149,7 +149,7 @@ export default function EditProfile ({ match }) {
   }, [match.params.userId])
 
   const clickSubmit = () => { // form submit handeler
-    const user = {
+    const user = { // prepare state 'vlaues' for JSON request
       name: values.name || undefined,
       email: values.email || undefined,
       password: values.password || undefined,
@@ -176,7 +176,7 @@ export default function EditProfile ({ match }) {
       }
     })
   }
-  s/**
+  /**
    * @name handleChange
    * @description updates state 'values' on form input on change
    * @param {String} name propert name in state 'values'

@@ -1,7 +1,12 @@
-// TODO:Comment
+/**
+ * @fileoverview routes coonent for web app
+ * @exports MainRouter
+ * @author Sam McRuvie
+ */
+// ----React package/imports
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
-
+// ----Project imports, apps pages/components
 import Home from './core/Home'
 import Signup from './user/Signup'
 import Signin from './auth/Signin'
@@ -14,6 +19,11 @@ import Menu from './core/Menu'
 import Product from './product/product'
 import CreateProduct from './dashboard/CreateProduct'
 
+/**
+ * @name MainRouter
+ * @description React routes component
+ * @returns JSX of MainRouter
+ */
 const MainRouter = () => {
   return (
     <div>
