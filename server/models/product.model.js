@@ -1,11 +1,19 @@
 
-// TODO:Comment
-// ---------- Imports
+/**
+ * @fileoverview Mongoose schema for the 'products' DB collection
+ * @exports mongoose.model
+ * @author Sam McRuvie
+ */
+// ----Mongoose package/imports
 import mongoose from 'mongoose'
+// ----Project imports DB models
 import User from '../models/user.model'
 
-// ---------- User model
-// Product propertys
+/**
+ * @class ProductSchema
+ * @description Mongoose schema for 'products' DB collection
+ * @type mongoose.Schema
+ */
 const ProductSchema = new mongoose.Schema({
   name: {
     type: String,

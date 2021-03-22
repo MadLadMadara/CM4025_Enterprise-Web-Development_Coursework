@@ -1,9 +1,17 @@
-// TODO:Comment
-// ---------- Imports
+/**
+ * @fileoverview Mongoose schema for the 'users' DB collection
+ * @exports mongoose.model
+ * @author Sam McRuvie
+ */
+// ----Mongoose package/imports
 import mongoose from 'mongoose'
+// ----crypto packages/imports
 import crypto from 'crypto'
-// ---------- User model
-// User propertys
+/**
+ * @class UserSchema
+ * @description Mongoose schema for 'users' DB collection
+ * @type mongoose.Schema
+ */
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,

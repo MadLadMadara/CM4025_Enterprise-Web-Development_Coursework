@@ -1,9 +1,18 @@
 'use strict'
-// TODO:Comment
 /**
-* Get unique error field name
-*/
+ * @fileoverview Helper functions for handeling mongo DB errors codes, converts errors 
+ * into fromated messages
+ * @exports getUniqueErrorMessage
+ * @exports getErrorMessage
+ * @author Sam McRuvie
+ */
 
+/**
+ * @name getUniqueErrorMessage
+ * @description Formats Mongo DB error message to human redable string
+ * @param {JSJON} err Mongo DB error object
+ * @returns {String} error message
+ */
 const getUniqueErrorMessage = (err) => {
   let output
   try {
@@ -16,7 +25,10 @@ const getUniqueErrorMessage = (err) => {
   return output
 }
 /**
- * Get the error message from error object
+ * @name getErrorMessage
+ * @description Convers Mongo DB error codes to error message
+ * @param {JSJON} err Mongo DB error object
+ * @returns {String} error messages
  */
 const getErrorMessage = (err) => {
   let message = ''
