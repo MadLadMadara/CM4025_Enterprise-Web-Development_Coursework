@@ -25,8 +25,9 @@ const JWTCookieNames = 't'
  * @decription Sines in user, needs 'req.body.email' & 'req.body.email'
  *  propertys that are check against the user DB
  * @param {Object} req from express, is the request to server, has property 'body.email' and 'body.password'
- * @param {Object} res from express, is the response to th request
- * @returns {Object} res object
+ * @param {Object} res from express, is the response to the request
+ * @returns {Object} res object if error ocuress with statuse '400' and JSON with property 'error'
+ * else return user
  */
 const signin = async (req, res) => {
   try {
@@ -75,7 +76,7 @@ const signin = async (req, res) => {
  * @description responds by requesing that browser cookie 'JWTCookieNames' is cleared
  * @param {Object} req from express, is the request to server
  * @param {Object} res from express, is the response to th request
- * @returns 
+ * @returns res object with statuse '200' and JSON with property 'message'
  */
 const signout = (req, res) => {
   res.clearCookie(JWTCookieNames)
@@ -96,8 +97,8 @@ const requireSignin = expressJwt({
  * @name hasAuthorization
  * @param {Object} req from express, is the request to server, needs 'profile' & 'auth' property
  * @param {Object} res from express, is the response to th request
- * @param {Function} next callback, executes if users is athenticated
- * @returns res object with statuse '403' executes if user has no authentication
+ * @callback next callback, executes if users is athenticated
+ * @returns res object with statuse '403' if user has no authentication
  */
 const hasAuthorization = (req, res, next) => {
   // checks propfile data agenst users auth
@@ -113,8 +114,8 @@ const hasAuthorization = (req, res, next) => {
  * @name hasAdminAuthorization
  * @param {Object} req from express, is the request to server, needs 'profile' & 'auth' property
  * @param {Object} res from express, is the response to the request
- * @param {Function} next callback, executes if users is athenticated and is and Admin
- * @returns res object with statuse '403' executes if user has no authentication
+ * @callback next callback, executes if users is athenticated and is and Admin
+ * @returns res object with statuse '403' if user has no Admin authentication
  */
 const hasAdminAuthorization = (req, res, next) => {
   // checks propfile data agenst users auth, includes admin check

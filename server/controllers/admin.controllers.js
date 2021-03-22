@@ -1,12 +1,32 @@
-// TODO:Comment
+/**
+ * @fileoverview Admin controllers
+ * @exports createProduct
+ * @exports readProduct
+ * @exports listProduct
+ * @exports resetProductViews
+ * @exports updateProduct
+ * @exports removeProduct
+ * @exports invertRoleUser
+ * @exports listUsers
+ * @author Sam McRuvie
+ */
 
-// ---------- imports
+// ----Project imports DB models
 import User from '../models/user.model'
 import Product from '../models/product.model'
+// ----DB package/imports
 import extend from 'lodash/extend'
+// ---- Helpers package/imports
 import errorHandler from './../helpers/dbErrorHandler'
 import productAnalyitic from '../helpers/productAnalyticHelper'
 
+/**
+ * @name createProduct
+ * @decription Creates a product based on 'req.body' in product document DB
+ * @param {Object} req from express, is the request to server, requires property 'req.body' that the product
+ * @param {Object} res from express, is the response to the request, returns JSON 'message' or 'error'
+ * @returns {Object} res object 'message' with statues '200' or 'error' with statuse '400'
+ */
 const createProduct = async (req, res) => {
   const product = new Product(req.body)
   try {
@@ -15,13 +35,19 @@ const createProduct = async (req, res) => {
       message: 'Successfully added product!'
     })
   } catch (err) {
-    console.log(err)
+    // console.log(err)
     return res.status(400).json({
       error: errorHandler.getErrorMessage(err)
     })
   }
 }
-
+/**
+ * @name readProduct
+ * @decription Formats a single product from product document DB as JSON respons
+ * @param {Object} req from express, is the request to server, requires property 'req.product' that is the product to be returnd
+ * @param {Object} res from express, is the response to the request, returns JSON of a product
+ * @returns {Object} res object if error ocuress with statuse '400' and JSON with property 'error'
+ */
 const readProduct = async (req, res) => {
   try {
     const product = req.product
@@ -32,6 +58,13 @@ const readProduct = async (req, res) => {
     })
   }
 }
+/**
+ * @name listProduct
+ * @decription Gets a all product from product document DB
+ * @param {Object} req from express, is the request to server, is not used by function
+ * @param {Object} res from express, is the response to the request, returns JSON of a all product /w Analyitic data
+ * @returns {Object} res object if error ocuress with statuse '400' and JSON with property 'error'
+ */
 const listProduct = async (req, res) => {
   try {
     const products = await Product.find().populate('viewedBy', 'preferences age gender')
@@ -43,7 +76,13 @@ const listProduct = async (req, res) => {
     })
   }
 }
-
+/**
+ * @name resetProductViews
+ * @decription Resets a single product 'viewBy' & 'views' feild from product document DB
+ * @param {Object} req from express, is the request to server, requires property 'req.product' that is the product to be reset
+ * @param {Object} res from express, is the response to the request, returns JSON of product reset
+ * @returns {Object} res object if error ocuress with statuse '400' and JSON with property 'error'
+ */
 const resetProductViews = async (req, res) => {
   try {
     const product = req.product
@@ -57,7 +96,13 @@ const resetProductViews = async (req, res) => {
     })
   }
 }
-
+/**
+ * @name updateProduct
+ * @decription Update a single product from product document DB
+ * @param {Object} req from express, is the request to server, requires property 'req.product' that is the product to be updates
+ * @param {Object} res from express, is the response to the request, returns JSON of updated product
+ * @returns {Object} res object if error ocuress with statuse '400' and JSON with property 'error'
+ */
 const updateProduct = async (req, res) => {
   try {
     let product = req.product
@@ -71,7 +116,13 @@ const updateProduct = async (req, res) => {
     })
   }
 }
-
+/**
+ * @name removeProduct
+ * @decription Removes a single product from product document DB
+ * @param {Object} req from express, is the request to server, requires property 'req.product' that is the product to be removed
+ * @param {Object} res from express, is the response to the request, returns JSON of removed product
+ * @returns {Object} res object if error ocuress with statuse '400' and JSON with property 'error'
+ */
 const removeProduct = async (req, res) => {
   try {
     const product = req.product
@@ -85,7 +136,13 @@ const removeProduct = async (req, res) => {
   }
 }
 
-// admin update
+/**
+ * @name invertRoleUser
+ * @decription Inverts a user admin Boolean feild in user document DB
+ * @param {Object} req from express, is the request to server, requires property 'req.body.user_id' that is the user to be affected
+ * @param {Object} res from express, is the response to the request, returns JSON of user affected
+ * @returns {Object} res object if error ocuress with statuse '400' and JSON with property 'error'
+ */
 const invertRoleUser = async (req, res) => {
   try {
     let user = await User.findById(req.body.user_id)
@@ -107,6 +164,13 @@ const invertRoleUser = async (req, res) => {
   }
 }
 
+/**
+ * @name listUsers
+ * @decription Get all users in user document DB
+ * @param {Object} req from express, is the request to server, not used in function
+ * @param {Object} res from express, is the response to the request, returns JSON of user all users
+ * @returns {Object} res object if error ocuress with statuse '400' and JSON with property 'error'
+ */
 const listUsers = async (req, res) => {
   try {
     const users = await User.find().select('name email updated created admin age gender preferences')

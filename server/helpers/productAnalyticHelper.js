@@ -1,14 +1,16 @@
-
-// TODO:Comment
+/* eslint-disable array-callback-return */
 /**
- * @fileoverview s
+ * @fileoverview Functions to help parse produsts with populated 'viewBy' feild to generate Analyitic based on views
  * @exports parseProductAnalyitic
  * @exports parseMultipleProductAnalyitic
+ * @author Sam McRuvie
  */
 
 /**
  * @name parseProductAnalyitic
- * @param {JSON Object} product A product document from the DB
+ * @description parse a single product document, converts populated 'viewedBy' feild
+ * user data into fromat that the 'victory' charts lib can use
+ * @param {JSON} product A product document
  * @returns JSON object structured simularly to product found products.model.js
  * bur with analytics propery.s
  */
@@ -42,31 +44,31 @@ const parseProductAnalyitic = (product) => {
         { x: 'whole-bean', y: 0 }]
     }
   }
-  // this should be done dynamicaly
-
+  // iterate over each user in products populated 'viewedBy' feild
   product.viewedBy.forEach((user) => {
-    // TODO: must comment
-
+    // iterate over each JSON object in 'productRespones.analytics.age' Array
+    // and return JSON Object as 'obj'
     productRespones.analytics.age.some((obj) => {
+      // increase obj.y if current obj.x is correct catagory & users age is within limits
       if (obj.x === 'Under 18' && user.age < 18) {
-        // change the value here
         obj.y += 1
-        return true // breaks out of he loop
+        return true // breaks out of her loop
       } else if (obj.x === '18 to 25' && user.age > 18 && user.age < 26) {
         obj.y += 1
-        return true // breaks out of he loop
+        return true // breaks out of her loop
       } else if (obj.x === '26 to 50' && user.age > 25 && user.age < 51) {
         obj.y += 1
-        return true // breaks out of he loop
+        return true // breaks out of her loop
       } else if (obj.x === '26 to 50' && user.age > 50) {
         obj.y += 1
-        return true // breaks out of he loop
+        return true // breaks out of her loop
       }
     })
-
+    // iterate over each JSON object in 'productRespones.analytics.preGround' Array
+    // and return JSON Object as 'obj'
     productRespones.analytics.preground.some((obj) => {
+      // increase obj.y if current obj.x is correct catagory & users preGround is true
       if (obj.x === 'pre-ground' && user.preferences.coffee.preGround === true) {
-        // change the value here
         obj.y += 1
         return true // breaks out of he loop
       } else if (obj.x === 'whole-bean' && user.preferences.coffee.preGround === false) {
@@ -74,16 +76,20 @@ const parseProductAnalyitic = (product) => {
         return true // breaks out of he loop
       }
     })
-
+    // iterate over each JSON object in 'productRespones.analytics.rost' Array
+    // and return JSON Object as 'obj'
     productRespones.analytics.rost.some((obj) => {
+      // increase obj.y if current obj.x is equal to 'user.preferences.coffee.rost' ('light', 'medium', 'dark')
       if (obj.x === user.preferences.coffee.rost) {
         // change the value here
         obj.y += 1
         return true // breaks out of he loop
       }
     })
-
+    // iterate over each JSON object in 'productRespones.analytics.gender' Array
+    // and return JSON Object as 'obj'
     productRespones.analytics.gender.some((obj) => {
+      // increase obj.y if current obj.x is equal to 'user.gender' ('male', 'female', 'non-binary', 'other')
       if (obj.x === user.gender) {
         // change the value here
         obj.y += 1
