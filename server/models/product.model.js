@@ -23,7 +23,7 @@ const ProductSchema = new mongoose.Schema({
   rost: {
     type: String,
     enum: ['light', 'medium', 'dark'],
-    required: 'Product name is required'
+    required: 'Product name is roast style'
   },
   description: {
     type: String,
@@ -36,7 +36,7 @@ const ProductSchema = new mongoose.Schema({
   },
   weight: {
     type: Number,
-    max: [1000, 'Weight can not be above 1kg'],
+    max: [10000, 'Weight can not be above 10kg'],
     min: [250, 'Weight can not be below 250g'],
     required: 'Product name is required'
   },
