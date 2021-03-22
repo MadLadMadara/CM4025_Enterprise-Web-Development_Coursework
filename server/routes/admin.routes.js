@@ -26,7 +26,7 @@ router.route('/api/admin/products/:userId')
 
 /**
  * @name path:'/api/admin/products/:productId/:userId'
- * @description Admin API routes for products collections, for single product accsess and 
+ * @description Admin API routes for products collections, for single product accsess and
  * manipulation
  * @inner
  * @function put Route updates single product based on ':productId' URL param &

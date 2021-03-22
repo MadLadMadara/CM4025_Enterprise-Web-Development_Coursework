@@ -1,4 +1,7 @@
-// TODO:Comment
+/**
+ * @fileoverview Server 'main' file, runs express app and listens on port 'config.port'
+ * @author Sam McRuvie
+ */
 // ----------- Imports
 import config from './../config/config'
 import app from './express'

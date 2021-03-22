@@ -1,6 +1,9 @@
-// TODO:Comment
-// ---------- imported
-// pakages
+/**
+ * @fileoverview Express configuration and initilasation for server
+ * @exports app
+ * @author Sam McRuvie
+ */
+// ---- Express package/imports/middle ware
 import express from 'express'
 import path from 'path'
 import bodyParser from 'body-parser'
@@ -9,7 +12,7 @@ import compress from 'compression'
 import cors from 'cors'
 import helmet from 'helmet'
 
-// modules for server side rendering
+// ---- Server side render package/imports
 import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 import MainRouter from './../client/MainRouter'
@@ -17,17 +20,16 @@ import { StaticRouter } from 'react-router-dom'
 import { ServerStyleSheets, ThemeProvider } from '@material-ui/styles'
 import theme from './../client/theme'
 
-// dev packages TODO:!!REMOVE FOR PRODUCTION!!
+// will only add dev fundel if config.env = 'development'
 import devBundle from './devBundle'
 
-// routers
+// ---- Express routes package/imports
 import userRoutes from './routes/user.routes'
 import authRoutes from './routes/auth.routes'
 import productRoutes from './routes/product.routes'
 import adminRouter from './routes/admin.routes'
 
-// Pageload
-
+// ---- Template JSX page imports
 import Template from '../template'
 
 // ---------- CONSTs
@@ -36,7 +38,6 @@ const app = express()
 
 // ----------- Middleware packages
 
-// TODO: remove for production
 devBundle.compile(app)
 
 // parse body params and attache them to req.body
@@ -49,7 +50,7 @@ app.use(helmet())
 // enable CORS - Cross Origin Resource Sharing
 app.use(cors())
 
-// ---------- Express routes
+// ---------- Express routes setup
 app.use('/dist', express.static(path.join(CURRENT_WORKING_DIR, 'dist')))
 app.use('/', userRoutes)
 app.use('/', authRoutes)
