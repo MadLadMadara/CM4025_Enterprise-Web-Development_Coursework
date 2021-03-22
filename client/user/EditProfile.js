@@ -60,7 +60,7 @@ const gendersList = [
   },
   {
     value: 'female',
-    label: 'Femle'
+    label: 'female'
   },
   {
     value: 'non-binery',
