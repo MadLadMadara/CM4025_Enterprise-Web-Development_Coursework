@@ -45,7 +45,7 @@ export default function DeleteUser (props) {
       if (data && data.error) {
         // console.log(data.error)
       } else {
-        auth.clearJWT() // cleare session storage 
+        auth.clearJWT(() => {}) // cleare session storage, requires callback
         setRedirect(true) // set state 'redirect' to true
       }
     })

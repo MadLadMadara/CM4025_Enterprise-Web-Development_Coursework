@@ -138,7 +138,7 @@ export default function Board ({ match }) {
                 <ListItemText primary={'Description'} secondary={product.description}/>
               </ListItem>
               <ListItem>
-                <ListItemText primary={'Views'} secondary={product.views}/>
+                <ListItemText primary={'Total views'} secondary={product.views}/>
               </ListItem>
               <IconButton aria-label='Delete' onClick={() => deleteProduct(product._id)} color='secondary'>
                 <DeleteIcon />
@@ -151,7 +151,7 @@ export default function Board ({ match }) {
             <Grid container spacing={3} className={classes.root} >
               <Grid item xs={12}>
               <Typography variant='h5'>
-                    click-through demographics
+                    click-through demographics of active users
                 </Typography>
               </Grid>
               <Grid item xs={12} sm={6} md={4} lg={6}>
