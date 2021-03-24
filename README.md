@@ -57,7 +57,7 @@ This guide shows you how to install and run the development version of the CM402
    ```sh
    npm install
    ```
-3. Enter your API in `config.js`
+3. Run develpment verion with ENV variables
    ```sh
    PORT=<your_port> JWT_SECRET="<your_secret>" MONGODB_URI="<your_mongo_db_URL>" npm run-script development
    ```
