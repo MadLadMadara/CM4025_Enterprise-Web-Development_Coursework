@@ -1,8 +1,5 @@
 # CM4025_Enterprise-Web-Development_Coursework
 
-[![Contributors][contributors-shield]][contributors-url]
-[![MIT License][license-shield]][license-url]
-
 <!-- TABLE OF CONTENTS -->
 <details open="open">
   <summary>Table of Contents</summary>
