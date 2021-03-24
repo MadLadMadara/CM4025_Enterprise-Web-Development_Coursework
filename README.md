@@ -8,6 +8,7 @@
       <a href="#about-the-project">About The Project</a>
       <ul>
         <li><a href="#built-with">Built With</a></li>
+         <li><a href="Application-context">Application context</a></li>
       </ul>
     </li>
     <li>
@@ -27,8 +28,11 @@
 
 This is the course work submition of Sam McRuvie (150933) [email](s.aj.mcruvie@gmail.com) for CM4024 Enterprise Web Development.
 
-### Contect 
-A coffee roasting/selling e-comers website. That displays the company’s (“Coffee house roastery”) products. Users can not order directly form the site but can view the range of products!
+### Application context 
+A coffee roasting/selling e-comers website. That displays the company’s (“Coffee house roastery”) products. 
+Users can not order directly form the site but can view the range of products! This app tracks product views and 
+user demographics of views on products on products
+
 
 
 ### Built With
