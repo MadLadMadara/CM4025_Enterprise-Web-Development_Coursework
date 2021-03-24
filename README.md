@@ -26,7 +26,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-This is the course work submition of Sam McRuvie (150933) [email](s.aj.mcruvie@gmail.com) for CM4024 Enterprise Web Development.
+This is the course work submition of Sam McRuvie (150933) for CM4024 Enterprise Web Development.
 
 ### Application context 
 A coffee roasting/selling e-comers website. That displays the company’s (“Coffee house roastery”) products. 
